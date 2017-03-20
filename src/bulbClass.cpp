@@ -65,8 +65,9 @@ void Bulb::draw() {
 	//printf("pixels[0]: %i\n", colorGet[0]);// does output to the console  
 
 	//switch on fill and set colour to show brightness
+	dmxLightVal = colorGet[0];
 	ofFill();
-	ofSetColor(colorGet[0], 0, 0);
+	ofSetColor(dmxLightVal, 0, 0);
 	ofDrawCircle(x, y, dim);
 
 	//draw outline and text
@@ -76,6 +77,11 @@ void Bulb::draw() {
 	ofDrawCircle(x, y, dim);
 
 	ofDrawBitmapString(dmxID, x + txtOffsetX, y + txtOffsetY);
+
+	////*********send DMX Values***********////
+	//dmx.setLevel(ID, chan1);
+
+	//dmx.update();
 }
 
 void Bulb::mousePressed() {

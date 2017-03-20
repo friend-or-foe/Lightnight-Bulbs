@@ -3,6 +3,10 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
 
+	dmx.connect("tty.usbserial-EN143965", NBULBS); // use the name
+	//dmx.connect(0); // or use a number
+	dmx.activateMk2(); //Un comment this if using dmxUSBPro mk2
+
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].setup(i);
 	}
@@ -12,7 +16,20 @@ void ofApp::setup() {
 void ofApp::update() {
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].update();
+
+		////*********send DMX Values***********////
+		//When sending to Mk2 you have to set universe as well as channel and value
+		//dmx.setLevel(channel, value, universe)
+		int thisLightValue = myBulb[i].dmxLightVal;
+		int thisID = myBulb[i].dmxID;
+		dmx.setLevel(thisID, thisLightValue, 1);
+
+		//uncomment to check outgoing DMX values
+		//printf("dmxVal: %i\n", thisLightValue);
 	}
+	
+	//update dmx values
+	dmx.update();
 }
 
 //--------------------------------------------------------------

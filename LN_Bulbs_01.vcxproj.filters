@@ -43,11 +43,11 @@
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp">
       <Filter>addons\ofxXmlSettings\libs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxDmx\src\ofxDmx.cpp">
-      <Filter>addons\ofxDmx\src</Filter>
-    </ClCompile>
     <ClCompile Include="src\bulbClass.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxDmx\src\ofxDmx.cpp">
+      <Filter>addons\ofxDmx\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,10 +73,10 @@
       <UniqueIdentifier>{58e6b82a-942e-4c00-99f7-cead7d8a3d41}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons\ofxDmx">
-      <UniqueIdentifier>{2fdd7bcb-03f2-4765-bff6-53dfb0eb43d7}</UniqueIdentifier>
+      <UniqueIdentifier>{6e009171-faed-4a46-95fe-cd2331a030d9}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons\ofxDmx\src">
-      <UniqueIdentifier>{af4e0934-89ad-4f00-aeac-dc25a841271b}</UniqueIdentifier>
+      <UniqueIdentifier>{1ea17a65-45d9-4ec9-9006-ebed89c81a87}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -116,11 +116,11 @@
     <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h">
       <Filter>addons\ofxXmlSettings\libs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxDmx\src\ofxDmx.h">
-      <Filter>addons\ofxDmx\src</Filter>
-    </ClInclude>
     <ClInclude Include="src\bulbClass.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxDmx\src\ofxDmx.h">
+      <Filter>addons\ofxDmx\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

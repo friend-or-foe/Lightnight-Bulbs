@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 #include "bulbClass.h"
-
+#include "ofxDmx.h" //include ofxDM addon
 #define NBULBS 10
 
 class ofApp : public ofBaseApp {
@@ -26,4 +26,7 @@ public:
 
 	Bulb myBulb[NBULBS];
 
+
+	////Create DMX object
+	ofxDmx dmx;
 };

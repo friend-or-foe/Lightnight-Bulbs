@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h" //included to have reference to the openFrameworks framework
-
+#include "ofxDmx.h" //include ofxDM addon
 
 //test change for github
 
@@ -10,9 +10,6 @@ class bulbClass
 public: // place public functions or variables declared here
 	bulbClass();
 	~bulbClass();
-
-
-
 
 };
 
@@ -44,6 +41,7 @@ public: // place public functions or variables declared here
 	ofColor color;		//Line colour
 						//ofColor fillColor;	//fill color
 	unsigned char colorGet[3]; //colourGet for fill
+	int dmxLightVal;	//brightness value for light. Passed to dmx
 
 	float txtOffsetX; //text offset (x) for number Identifier
 	float txtOffsetY; //text offset (y) for number Identifier
