@@ -10,10 +10,17 @@ void ofApp::setup() {
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].setup(i);
 	}
+
+	ofSetFrameRate(200);
+
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
+
+	ofSetWindowTitle(ofToString(ofGetFrameRate(), 1)); //print framerate to titlebar
+
+
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].update();
 		
@@ -25,14 +32,27 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw() {
 
-	ofBackground(0);
+	//ofBackground(0);
 
-	ofFill();
-	ofSetColor(255, ofGetMouseY() / 5);
+	ofFill(); //set fill back on
+	ofSetColor(0);
+	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight()); //draw rectanle to wipe previous frame
+
+	
+	ofSetColor(255, ofGetMouseY() / 4); //set transperency of test circle
 	ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ofGetMouseX() / 5, ofGetMouseX() / 5);
 
+	//grab screenshot  before bulbs are drawn
+	tmpImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+
+	//tmpImage.save("screenshot.jpg");
 	for (int i = 0; i<NBULBS; i++) {
-		myBulb[i].draw();
+		ofColor tmpCol = tmpImage.getColor(myBulb[i].x, myBulb[i].y); //get pixel colour for object
+		///uncomment to check colour being sent to bulb object
+		///printf("myBulb - colour: %i\n", tmpCol.r);
+
+		myBulb[i].draw(tmpCol.r); //call draw sending colour value to object.
+
 		////*********send DMX Values***********////
 		//When sending to Mk2 you have to set universe as well as channel and value
 		//dmx.setLevel(channel, value, universe)
@@ -40,8 +60,8 @@ void ofApp::draw() {
 		int thisID = myBulb[i].dmxID;
 		//dmx.setLevel(thisID, thisLightValue, 1);
 
-		//uncomment to check outgoing DMX values
-		//printf("dmxVal: %i\n", thisLightValue);
+		///uncomment to check outgoing DMX values
+		///printf("dmxVal: %i\n", thisLightValue);
 	}
 	//update dmx values
 	//dmx.update();

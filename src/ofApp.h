@@ -26,6 +26,7 @@ public:
 
 	Bulb myBulb[NBULBS];
 
+	ofImage tmpImage;
 
 	////Create DMX object
 	ofxDmx dmx;

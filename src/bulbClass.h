@@ -20,7 +20,7 @@ public: // place public functions or variables declared here
 		//methods, equivalent to specific functions of your class objects
 	void setup(int _ID); //arguments you want to pass must have temp variable names inserted here
 	void update();
-	void draw();
+	void draw(int _tmpCol);
 	void mousePressed();
 	void mouseDragged();
 	void mouseReleased();

@@ -58,14 +58,15 @@ void Bulb::update() {
 
 }
 
-void Bulb::draw() {
+void Bulb::draw(int _tmpCol) {
 
-	//************** GET PIXEL COLOUR UNDER OBJECT **************//
-	glReadPixels(x, ofGetHeight() - y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, colorGet);
+	//************** GET PIXEL COLOUR UNDER OBJECT (NOT NEEDED IF USING SCREENSHOT APPROACH)**************//
+	//glReadPixels(x, ofGetHeight() - y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, colorGet);
 	//printf("pixels[0]: %i\n", colorGet[0]);// does output to the console  
 
+	
 	//switch on fill and set colour to show brightness
-	dmxLightVal = colorGet[0];
+	dmxLightVal = _tmpCol; // colorGet[0];
 	ofFill();
 	ofSetColor(dmxLightVal, 0, 0);
 	ofDrawCircle(x, y, dim);
