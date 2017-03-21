@@ -16,20 +16,10 @@ void ofApp::setup() {
 void ofApp::update() {
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].update();
-
-		////*********send DMX Values***********////
-		//When sending to Mk2 you have to set universe as well as channel and value
-		//dmx.setLevel(channel, value, universe)
-		int thisLightValue = myBulb[i].dmxLightVal;
-		int thisID = myBulb[i].dmxID;
-		dmx.setLevel(thisID, thisLightValue, 1);
-
-		//uncomment to check outgoing DMX values
-		//printf("dmxVal: %i\n", thisLightValue);
+		
 	}
 	
-	//update dmx values
-	dmx.update();
+
 }
 
 //--------------------------------------------------------------
@@ -43,7 +33,20 @@ void ofApp::draw() {
 
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].draw();
+		////*********send DMX Values***********////
+		//When sending to Mk2 you have to set universe as well as channel and value
+		//dmx.setLevel(channel, value, universe)
+		int thisLightValue = myBulb[i].dmxLightVal;
+		int thisID = myBulb[i].dmxID;
+		//dmx.setLevel(thisID, thisLightValue, 1);
+
+		//uncomment to check outgoing DMX values
+		//printf("dmxVal: %i\n", thisLightValue);
 	}
+	//update dmx values
+	//dmx.update();
+
+
 }
 
 //--------------------------------------------------------------
