@@ -1,0 +1,31 @@
+LIGHT NIGHT 2017 - dmxBulbs
+
+ -----------------
+| Features to Add |
+ -----------------
+
+------ 1. Communication ------
+- DMX Output
+- MIDI Input 
+	- from Audio Software
+	- From Controller Keyboard
+- Audio Input (multiple channels if possible)
+
+------2. General Interface ------
+- Match size/aspect to plans
+	- leave margin on left for panel (control) options
+- Load/Save Dialogue
+- Test pattern?
+
+------3. Features ------
+- Multiple Scene Selection
+	*possible scenes*
+	- Breathe
+	- sweep (x/y/z)
+	- light areas/zones
+	- audio react over mics (set clusters)
+	- individual frequencies attached to bulbs?
+	- strobe/degrade/flicker
+- Save/Load bulb layout
+- Dim all lights/blackout?
+- set overall max value
