@@ -3,8 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
 
-	dmx.connect("tty.usbserial-EN143965", NBULBS); // use the name
-	//dmx.connect(0); // or use a number
+	//dmx.connect("tty.usbserial-EN143965", NBULBS); // use the name
+	dmx.connect(0, NBULBS); // or use a number
 	dmx.activateMk2(); //Un comment this if using dmxUSBPro mk2
 
 	for (int i = 0; i<NBULBS; i++) {
@@ -17,9 +17,6 @@ void ofApp::setup() {
 
 //--------------------------------------------------------------
 void ofApp::update() {
-
-	ofSetWindowTitle(ofToString(ofGetFrameRate(), 1)); //print framerate to titlebar
-
 
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].update();
@@ -58,15 +55,18 @@ void ofApp::draw() {
 		//dmx.setLevel(channel, value, universe)
 		int thisLightValue = myBulb[i].dmxLightVal;
 		int thisID = myBulb[i].dmxID;
-		//dmx.setLevel(thisID, thisLightValue, 1);
+		dmx.setLevel(thisID, thisLightValue, 2);
 
 		///uncomment to check outgoing DMX values
 		///printf("dmxVal: %i\n", thisLightValue);
 	}
+
+	//***************UNCOMMENT TO SEND SIGNALS WHEN CONNECTED TO USBPRO*****************//
 	//update dmx values
 	//dmx.update();
 
-
+	//draw framerate to window
+	ofDrawBitmapString(ofToString(ofGetFrameRate(), 1), 10, 20);
 }
 
 //--------------------------------------------------------------

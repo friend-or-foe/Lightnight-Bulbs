@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "bulbClass.h"
 #include "ofxDmx.h" //include ofxDM addon
-#define NBULBS 70
+#define NBULBS 5
 
 class ofApp : public ofBaseApp {
 
