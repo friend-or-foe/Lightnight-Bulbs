@@ -38,6 +38,7 @@ void Bulb::setLoc(int _x, int _y) {
 
 }
 
+
 void Bulb::update(float _bulbSize) {
 
 	if (dim != _bulbSize) {

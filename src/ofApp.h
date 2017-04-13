@@ -30,7 +30,7 @@ public:
 	///--------- XML STUFF --------------//
 	void loadButtonPressed(); //load button for bulb locations
 	void saveButtonPressed(); //load button for bulb locations
-
+	void exit(); //remove listeners on app exit
 	
 
 	Bulb myBulb[NBULBS];
