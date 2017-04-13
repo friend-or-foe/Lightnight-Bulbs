@@ -7,15 +7,15 @@ Bulb::Bulb()
 }
 
 
-void Bulb::setup(int _ID) {
+void Bulb::setup(int _ID, int _offX, int _offY) {
 
 	dmxID = _ID + 1;
 
 	//Uncomment line below to print out DMX ID
 	//printf("ID: %i\n", dmxID);
 
-	x = ofRandom(0, ofGetWidth());
-	y = ofRandom(0, ofGetHeight());
+	x = ofRandom(_offX, _offX + 1400);
+	y = ofRandom(_offY, _offY + 674);
 
 	difx = 0;
 	dify = 0;

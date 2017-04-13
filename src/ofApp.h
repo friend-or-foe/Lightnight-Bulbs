@@ -26,8 +26,16 @@ public:
 
 	Bulb myBulb[NBULBS];
 
-	ofImage tmpImage;
+	ofImage tmpImage; //image for screengrab to be saved to. The bulbs pick their colour from this
+	ofColor tmpCol; //stores the colour value to pass to bulbs
 
 	////Create DMX object
 	ofxDmx dmx;
+
+
+	//Import floor plan image
+	ofImage plan;
+	int planOffsetX;
+	int planOffsetY;
+
 };

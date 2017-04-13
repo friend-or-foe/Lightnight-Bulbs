@@ -7,11 +7,21 @@ void ofApp::setup() {
 	dmx.connect(0, NBULBS); // or use a number
 	dmx.activateMk2(); //Un comment this if using dmxUSBPro mk2
 
+	////// LOAD PLAN IMAGE AND SET OFFSETS FOR COLOUR GRABBING ////////
+	plan.load("SGH - Catacomb Plans - 1400.jpg");
+
+	//set colour grab offsets (Location to draw plan to)
+	planOffsetX = 470; // plan.getWidth();
+	planOffsetY = 50; // plan.getHeight();
+
+
 	for (int i = 0; i<NBULBS; i++) {
-		myBulb[i].setup(i);
+		myBulb[i].setup(i, planOffsetX, planOffsetY);
 	}
 
 	ofSetFrameRate(200);
+
+
 
 }
 
@@ -40,13 +50,22 @@ void ofApp::draw() {
 	ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ofGetMouseX() / 5, ofGetMouseX() / 5);
 
 	//grab screenshot  before bulbs are drawn
-	tmpImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+	tmpImage.grabScreen(planOffsetX, planOffsetY, 1400, 674);
+
+	ofNoFill();
+	ofSetColor(255);
+	ofDrawRectangle(470, 50, 1400, 674);
 
 	//tmpImage.save("screenshot.jpg");
-	for (int i = 0; i<NBULBS; i++) {
-		ofColor tmpCol = tmpImage.getColor(myBulb[i].x, myBulb[i].y); //get pixel colour for object
+	for (int i = 0; i < NBULBS; i++) {
+		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < 1400
+			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < 674) {
+		tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
 		///uncomment to check colour being sent to bulb object
 		///printf("myBulb - colour: %i\n", tmpCol.r);
+		} else {
+			tmpCol = (0, 0, 0);
+		}
 
 		myBulb[i].draw(tmpCol.r); //call draw sending colour value to object.
 
