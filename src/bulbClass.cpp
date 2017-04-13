@@ -31,6 +31,12 @@ void Bulb::setup(int _ID, int _offX, int _offY, float _bulbSize) {
 	txtOffsetY = 5;
 }
 
+void Bulb::setLoc(int _x, int _y) {
+
+	x = _x;
+	y = _y;
+
+}
 
 void Bulb::update(float _bulbSize) {
 

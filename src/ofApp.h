@@ -4,8 +4,9 @@
 #include "bulbClass.h"
 #include "ofxDmx.h" //include ofxDM addon
 #include "ofxGui.h" //include GUI addon
+#include "ofxXmlSettings.h"
 
-#define NBULBS 5
+#define NBULBS 70
 
 class ofApp : public ofBaseApp {
 
@@ -25,6 +26,12 @@ public:
 	void windowResized(int w, int h);
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
+
+	///--------- XML STUFF --------------//
+	void loadButtonPressed(); //load button for bulb locations
+	void saveButtonPressed(); //load button for bulb locations
+
+	
 
 	Bulb myBulb[NBULBS];
 
@@ -49,5 +56,7 @@ public:
 
 	ofParameter<float> bulbSize = 20.0;
 	ofParameter<bool> drawPlan;
+	ofxButton loadBulbLocations;
+	ofxButton saveBulbLocations;
 
 };

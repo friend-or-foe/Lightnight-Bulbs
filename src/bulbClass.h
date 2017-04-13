@@ -25,6 +25,7 @@ public: // place public functions or variables declared here
 	void mouseDragged();
 	void mouseReleased();
 
+	void setLoc(int _x, int _y);
 	//variables
 
 	//****** POSITION AND DRAG STUFF ******//
@@ -36,7 +37,10 @@ public: // place public functions or variables declared here
 	bool bOver; //check if mouse is over bool
 	bool locked; //lock if clicked
 
-				 //****** APPEARENCE PROPERTIES  ******//
+	//****** LOAD AND SAVE POSITIONS ******//
+
+
+	//****** APPEARENCE PROPERTIES  ******//
 	int dim;			//size
 	ofColor color;		//Line colour
 						//ofColor fillColor;	//fill color

@@ -21,10 +21,59 @@ void ofApp::setup() {
 	ofSetFrameRate(200);
 
 	///--------- GUI STUFF --------------//
+	loadBulbLocations.addListener(this, &ofApp::loadButtonPressed);
+	saveBulbLocations.addListener(this, &ofApp::saveButtonPressed);
+
 	gui.setup();
 	gui.add(bulbSize.set("bulb size", bulbSize, 0.1, 40.0));
 	gui.add(drawPlan.set("draw plan", false));
+	gui.add(loadBulbLocations.setup("load bulb locations"));
+	gui.add(saveBulbLocations.setup("save bulb locations"));
 
+
+}
+
+//--------------------------------------------------------------
+void ofApp::loadButtonPressed() {
+	ofxXmlSettings settings;
+	if (settings.loadFile("positions.xml")) {
+		settings.pushTag("positions");
+		int numberOfSavedPoints = settings.getNumTags("position");
+		for (int i = 0; i < numberOfSavedPoints; i++) {
+			settings.pushTag("position", i);
+
+			int tempX = settings.getValue("X", 0);
+			int tempY = settings.getValue("Y", 0);
+
+			myBulb[i].setLoc(tempX, tempY);
+			settings.popTag();
+		}
+
+		settings.popTag(); //pop position
+	}
+	else {
+		ofLogError("Position file did not load!");
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::saveButtonPressed() {
+
+	ofxXmlSettings positions;
+	positions.addTag("positions");
+	positions.pushTag("positions");
+	//points is a vector<ofPoint> that we want to save to a file
+	for (int i = 0; i < NBULBS; i++) {
+		//each position tag represents one point
+		positions.addTag("position");
+		positions.pushTag("position", i);
+		//so set the three values in the file
+		positions.addValue("X", myBulb[i].x);
+		positions.addValue("Y", myBulb[i].y);
+		positions.popTag();//pop position
+	}
+	positions.popTag(); //pop position
+	positions.saveFile("positions.xml");
 
 }
 
