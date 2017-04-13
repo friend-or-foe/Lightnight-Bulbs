@@ -49,6 +49,18 @@
     <ClCompile Include="..\..\..\addons\ofxDmx\src\ofxDmx.cpp">
       <Filter>addons\ofxDmx\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFFT\src\ofxFFTBase.cpp">
+      <Filter>addons\ofxFFT\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFFT\src\ofxFFTFile.cpp">
+      <Filter>addons\ofxFFT\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFFT\src\ofxFFTLive.cpp">
+      <Filter>addons\ofxFFT\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFFT\libs\fft.cpp">
+      <Filter>addons\ofxFFT\libs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -77,6 +89,15 @@
     </Filter>
     <Filter Include="addons\ofxDmx\src">
       <UniqueIdentifier>{1ea17a65-45d9-4ec9-9006-ebed89c81a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFFT">
+      <UniqueIdentifier>{0e598330-0fa8-4128-bc30-d4629aa81fe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFFT\src">
+      <UniqueIdentifier>{8ad31944-c107-4eef-897e-ff788a7af465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFFT\libs">
+      <UniqueIdentifier>{5647f414-6a44-4213-867e-26ac4f4bbd97}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +142,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxDmx\src\ofxDmx.h">
       <Filter>addons\ofxDmx\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFFT\src\ofxFFTBase.h">
+      <Filter>addons\ofxFFT\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFFT\src\ofxFFTFile.h">
+      <Filter>addons\ofxFFT\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFFT\src\ofxFFTLive.h">
+      <Filter>addons\ofxFFT\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFFT\libs\fft.h">
+      <Filter>addons\ofxFFT\libs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

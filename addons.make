@@ -1,3 +1,4 @@
 ofxGui
 ofxXmlSettings
 ofxDmx
+ofxFFT

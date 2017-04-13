@@ -95,8 +95,9 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -117,8 +118,9 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;%(AdditionalIncludeDire
       <WarningLevel>Level3</WarningLevel>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -135,8 +137,9 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;%(AdditionalIncludeDire
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -158,8 +161,9 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;%(AdditionalIncludeDire
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -176,6 +180,10 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;%(AdditionalIncludeDire
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\addons\ofxDmx\src\ofxDmx.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxFFT\libs\fft.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxFFT\src\ofxFFTBase.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxFFT\src\ofxFFTFile.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxFFT\src\ofxFFTLive.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxBaseGui.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxButton.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxGuiGroup.cpp" />
@@ -194,6 +202,10 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;%(AdditionalIncludeDire
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\addons\ofxDmx\src\ofxDmx.h" />
+    <ClInclude Include="..\..\..\addons\ofxFFT\libs\fft.h" />
+    <ClInclude Include="..\..\..\addons\ofxFFT\src\ofxFFTBase.h" />
+    <ClInclude Include="..\..\..\addons\ofxFFT\src\ofxFFTFile.h" />
+    <ClInclude Include="..\..\..\addons\ofxFFT\src\ofxFFTLive.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxButton.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxGui.h" />

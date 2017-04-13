@@ -6,6 +6,8 @@
 #include "ofxGui.h" //include GUI addon
 #include "ofxXmlSettings.h"
 
+#include "ofxFFTBase.h"
+
 #define NBULBS 70
 
 class ofApp : public ofBaseApp {
@@ -59,4 +61,19 @@ public:
 	ofxButton loadBulbLocations;
 	ofxButton saveBulbLocations;
 
+	///--------- FFT STUFF --------------//
+	void initAudio();
+	void drawSamples(vector<float> samples);
+	void audioIn(float * input, int bufferSize, int nChannels);
+	void drawFFT();
+
+	ofSoundStream soundStream;
+	vector<float> samplesChannelL;
+	vector<float> samplesChannelR;
+
+	float * fftSmooth;
+	float sampleScale = 600;
+
+	ofxFFTBase fftChannelL;
+	ofxFFTBase fftChannelR;
 };

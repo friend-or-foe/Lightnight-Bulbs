@@ -19,7 +19,7 @@ void ofApp::setup() {
 		myBulb[i].setup(i, planOffsetX, planOffsetY, bulbSize);
 	}
 
-	ofSetFrameRate(200);
+
 
 	///--------- GUI STUFF --------------//
 	loadBulbLocations.addListener(this, &ofApp::loadButtonPressed);
@@ -31,13 +31,82 @@ void ofApp::setup() {
 	gui.add(loadBulbLocations.setup("load bulb locations"));
 	gui.add(saveBulbLocations.setup("save bulb locations"));
 
+	///--------- FFT STUFF --------------//
+	initAudio();
+
+	ofSetFrameRate(200);
+}
+
+void ofApp::initAudio() {
+	
+	int channelsOut = 0;        // number of requested output channels (i.e. 2 for stereo).
+	int channelsIn = 2;         // number of requested input channels.
+	int sampleRate = 44100;     // requested sample rate (44100 is typical).
+	int bufferSize = 1024;       // requested buffer size (256 is typical).
+	int numOfBuffers = 4;       // number of buffers to queue, less buffers will be more responsive, but less stable.
+
+	soundStream.setup(this, channelsOut, channelsIn, sampleRate, bufferSize, numOfBuffers);
+
+	samplesChannelL.assign(bufferSize, 0.0);
+	samplesChannelR.assign(bufferSize, 0.0);
+
+	fftSmooth = new float[bufferSize];
+	for (int i = 0; i < bufferSize; i++) {
+		fftSmooth[i] = 0;
+	}
+
 
 }
 
+void ofApp::drawSamples(vector<float> samples) {
 
+	int sampleWidth = ofGetWidth() / samples.size();
+	int sampleHeight = ofGetHeight() / 2;
+	int numOfSamples = samples.size();
 
+	for (int i = 0; i<numOfSamples; i+=10) {
+		int x = ofMap(i, 0, numOfSamples - 1, 0, ofGetWidth() - sampleWidth);
+		int y = 0;
+
+		//smoothing for fft values
+		float value = samples[i] * sampleScale;// *= 0.993f;
+		fftSmooth[i] *= 0.98f;
+		if (fftSmooth[i] < value) {
+			fftSmooth[i] = value;
+		}
+
+		int w = 1 + (-fftSmooth[i]);
+		//int h = -samples[i] * sampleHeight;
+
+		//ofDrawEllipse(x, y, w, w);
+		ofDrawEllipse(planOffsetX + 700, y, w, w);
+	}
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
+
+	for (int i = 0; i<bufferSize; i++) {
+		samplesChannelL[i] = input[i * 2 + 0];
+		samplesChannelR[i] = input[i * 2 + 1];
+	}
+
+	float * dataL = &samplesChannelL[0];
+	float * dataR = &samplesChannelL[0];
+
+	fftChannelL.audioIn(dataL);
+	fftChannelR.audioIn(dataR);
+}
+
+//--------------------------------------------------------------
 
 void ofApp::update() {
+
+	fftChannelL.update();
+	fftChannelR.update();
+
 
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].update(bulbSize);
@@ -47,6 +116,22 @@ void ofApp::update() {
 
 }
 
+void ofApp::drawFFT() {
+
+	ofSetColor(255, 20);
+	ofPushMatrix();
+	ofTranslate(0, 362);
+	drawSamples(fftChannelL.getFftNormData());
+	ofPopMatrix();
+
+	//uncomment to draw right channel
+	/*
+	ofPushMatrix();
+	ofTranslate(0, ofGetHeight() * 0.75);
+	drawSamples(fftChannelR.getFftNormData());
+	ofPopMatrix();
+	*/
+}
 //--------------------------------------------------------------
 void ofApp::draw() {
 
@@ -57,8 +142,11 @@ void ofApp::draw() {
 	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight()); //draw rectanle to wipe previous frame
 
 	
-	ofSetColor(255, ofGetMouseY() / 4); //set transperency of test circle
-	ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ofGetMouseX() / 5, ofGetMouseX() / 5);
+	//ofSetColor(255, ofGetMouseY() / 4); //set transperency of test circle
+	//ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ofGetMouseX() / 5, ofGetMouseX() / 5);
+
+	///----------- DRAW FFT SHAPES ---------------//
+	drawFFT();
 
 	//grab screenshot  before bulbs are drawn
 	tmpImage.grabScreen(planOffsetX, planOffsetY, 1400, 674);
