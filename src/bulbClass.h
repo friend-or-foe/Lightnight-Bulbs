@@ -18,13 +18,14 @@ class Bulb {
 public: // place public functions or variables declared here
 
 		//methods, equivalent to specific functions of your class objects
-	void setup(int _ID); //arguments you want to pass must have temp variable names inserted here
-	void update();
+	void setup(int _ID, int _offX, int _offY, float _bulbSize); //arguments you want to pass must have temp variable names inserted here
+	void update(float _bulbSize);
 	void draw(int _tmpCol);
 	void mousePressed();
 	void mouseDragged();
 	void mouseReleased();
 
+	void setLoc(int _x, int _y);
 	//variables
 
 	//****** POSITION AND DRAG STUFF ******//
@@ -36,7 +37,10 @@ public: // place public functions or variables declared here
 	bool bOver; //check if mouse is over bool
 	bool locked; //lock if clicked
 
-				 //****** APPEARENCE PROPERTIES  ******//
+	//****** LOAD AND SAVE POSITIONS ******//
+
+
+	//****** APPEARENCE PROPERTIES  ******//
 	int dim;			//size
 	ofColor color;		//Line colour
 						//ofColor fillColor;	//fill color

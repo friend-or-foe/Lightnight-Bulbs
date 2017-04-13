@@ -7,19 +7,40 @@ void ofApp::setup() {
 	dmx.connect(0, NBULBS); // or use a number
 	dmx.activateMk2(); //Un comment this if using dmxUSBPro mk2
 
+	////// LOAD PLAN IMAGE AND SET OFFSETS FOR COLOUR GRABBING ////////
+	plan.load("SGH - Catacomb Plans - 1400.jpg");
+
+	//set colour grab offsets (Location to draw plan to)
+	planOffsetX = 470; // plan.getWidth();
+	planOffsetY = 50; // plan.getHeight();
+
+	//create bulb objects
 	for (int i = 0; i<NBULBS; i++) {
-		myBulb[i].setup(i);
+		myBulb[i].setup(i, planOffsetX, planOffsetY, bulbSize);
 	}
 
 	ofSetFrameRate(200);
 
+	///--------- GUI STUFF --------------//
+	loadBulbLocations.addListener(this, &ofApp::loadButtonPressed);
+	saveBulbLocations.addListener(this, &ofApp::saveButtonPressed);
+
+	gui.setup();
+	gui.add(bulbSize.set("bulb size", bulbSize, 0.1, 40.0));
+	gui.add(drawPlan.set("draw plan", false));
+	gui.add(loadBulbLocations.setup("load bulb locations"));
+	gui.add(saveBulbLocations.setup("save bulb locations"));
+
+
 }
 
-//--------------------------------------------------------------
+
+
+
 void ofApp::update() {
 
 	for (int i = 0; i<NBULBS; i++) {
-		myBulb[i].update();
+		myBulb[i].update(bulbSize);
 		
 	}
 	
@@ -40,13 +61,27 @@ void ofApp::draw() {
 	ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ofGetMouseX() / 5, ofGetMouseX() / 5);
 
 	//grab screenshot  before bulbs are drawn
-	tmpImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+	tmpImage.grabScreen(planOffsetX, planOffsetY, 1400, 674);
+
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	} else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(470, 50, 1400, 674);
+	}
 
 	//tmpImage.save("screenshot.jpg");
-	for (int i = 0; i<NBULBS; i++) {
-		ofColor tmpCol = tmpImage.getColor(myBulb[i].x, myBulb[i].y); //get pixel colour for object
+	for (int i = 0; i < NBULBS; i++) {
+		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < 1400
+			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < 674) {
+		tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
 		///uncomment to check colour being sent to bulb object
 		///printf("myBulb - colour: %i\n", tmpCol.r);
+		} else {
+			tmpCol = (0, 0, 0);
+		}
 
 		myBulb[i].draw(tmpCol.r); //call draw sending colour value to object.
 
@@ -67,6 +102,9 @@ void ofApp::draw() {
 
 	//draw framerate to window
 	ofDrawBitmapString(ofToString(ofGetFrameRate(), 1), 10, 20);
+
+	//DRAW GUI
+	gui.draw();
 }
 
 //--------------------------------------------------------------
@@ -128,4 +166,55 @@ void ofApp::gotMessage(ofMessage msg) {
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo) {
 
+}
+
+////******************* XML LOAD/SAVE BULB LOCATION FUNCTIONS ********************/////
+//--------------------------------------------------------------
+void ofApp::loadButtonPressed() {
+	ofxXmlSettings settings;
+	if (settings.loadFile("positions.xml")) {
+		settings.pushTag("positions");
+		int numberOfSavedPoints = settings.getNumTags("position");
+		for (int i = 0; i < numberOfSavedPoints; i++) {
+			settings.pushTag("position", i);
+
+			int tempX = settings.getValue("X", 0);
+			int tempY = settings.getValue("Y", 0);
+
+			myBulb[i].setLoc(tempX, tempY);
+			settings.popTag();
+		}
+
+		settings.popTag(); //pop position
+	}
+	else {
+		ofLogError("Position file did not load!");
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::saveButtonPressed() {
+
+	ofxXmlSettings positions;
+	positions.addTag("positions");
+	positions.pushTag("positions");
+	//points is a vector<ofPoint> that we want to save to a file
+	for (int i = 0; i < NBULBS; i++) {
+		//each position tag represents one point
+		positions.addTag("position");
+		positions.pushTag("position", i);
+		//so set the three values in the file
+		positions.addValue("X", myBulb[i].x);
+		positions.addValue("Y", myBulb[i].y);
+		positions.popTag();//pop position
+	}
+	positions.popTag(); //pop position
+	positions.saveFile("positions.xml");
+
+}
+
+//--------------------------------------------------------------
+void ofApp::exit() {
+	loadBulbLocations.removeListener(this, &ofApp::loadButtonPressed);
+	saveBulbLocations.removeListener(this, &ofApp::saveButtonPressed);
 }
