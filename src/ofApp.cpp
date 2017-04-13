@@ -14,13 +14,16 @@ void ofApp::setup() {
 	planOffsetX = 470; // plan.getWidth();
 	planOffsetY = 50; // plan.getHeight();
 
-
 	for (int i = 0; i<NBULBS; i++) {
-		myBulb[i].setup(i, planOffsetX, planOffsetY);
+		myBulb[i].setup(i, planOffsetX, planOffsetY, bulbSize);
 	}
 
 	ofSetFrameRate(200);
 
+	///--------- GUI STUFF --------------//
+	gui.setup();
+	gui.add(bulbSize.set("bulb size", bulbSize, 0.1, 40.0));
+	gui.add(drawPlan.set("draw plan", false));
 
 
 }
@@ -29,7 +32,7 @@ void ofApp::setup() {
 void ofApp::update() {
 
 	for (int i = 0; i<NBULBS; i++) {
-		myBulb[i].update();
+		myBulb[i].update(bulbSize);
 		
 	}
 	
@@ -52,9 +55,14 @@ void ofApp::draw() {
 	//grab screenshot  before bulbs are drawn
 	tmpImage.grabScreen(planOffsetX, planOffsetY, 1400, 674);
 
-	ofNoFill();
-	ofSetColor(255);
-	ofDrawRectangle(470, 50, 1400, 674);
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	} else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(470, 50, 1400, 674);
+	}
 
 	//tmpImage.save("screenshot.jpg");
 	for (int i = 0; i < NBULBS; i++) {
@@ -86,6 +94,9 @@ void ofApp::draw() {
 
 	//draw framerate to window
 	ofDrawBitmapString(ofToString(ofGetFrameRate(), 1), 10, 20);
+
+	//DRAW GUI
+	gui.draw();
 }
 
 //--------------------------------------------------------------

@@ -7,7 +7,7 @@ Bulb::Bulb()
 }
 
 
-void Bulb::setup(int _ID, int _offX, int _offY) {
+void Bulb::setup(int _ID, int _offX, int _offY, float _bulbSize) {
 
 	dmxID = _ID + 1;
 
@@ -23,7 +23,7 @@ void Bulb::setup(int _ID, int _offX, int _offY) {
 	bOver = false;
 	locked = false;
 
-	dim = 20;
+	dim = _bulbSize;
 
 	color.set(255, 255, 255);
 
@@ -32,8 +32,11 @@ void Bulb::setup(int _ID, int _offX, int _offY) {
 }
 
 
-void Bulb::update() {
+void Bulb::update(float _bulbSize) {
 
+	if (dim != _bulbSize) {
+		dim = _bulbSize;
+	}
 	// Test if the cursor is over the box 
 
 	if (ofGetMouseX() > x - dim && ofGetMouseX() < x + dim &&

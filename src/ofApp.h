@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "bulbClass.h"
 #include "ofxDmx.h" //include ofxDM addon
+#include "ofxGui.h" //include GUI addon
+
 #define NBULBS 5
 
 class ofApp : public ofBaseApp {
@@ -37,5 +39,15 @@ public:
 	ofImage plan;
 	int planOffsetX;
 	int planOffsetY;
+
+	//bool drawPlan = false; //draw floor plan to screen
+
+
+	///--------- GUI STUFF --------------//
+
+	ofxPanel gui;
+
+	ofParameter<float> bulbSize = 20.0;
+	ofParameter<bool> drawPlan;
 
 };
