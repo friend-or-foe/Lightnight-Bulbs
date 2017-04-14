@@ -222,6 +222,19 @@ void ofApp::mainScene_1() {
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
 
+	switch (key)
+	{
+	case '1':
+		myScene = SCENE_1;;
+		break;
+	case '2':
+		myScene = SCENE_2;
+		break;
+	case '3':
+		myScene = SCENE_3;
+		break;
+	}
+
 }
 
 //--------------------------------------------------------------
