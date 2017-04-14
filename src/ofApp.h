@@ -10,6 +10,13 @@
 
 #define NBULBS 70
 
+//define scene options
+typedef enum {
+	SCENE_1, // these can have any name you want, eg SCENE_BREATH etc  
+	SCENE_2,
+	SCENE_3
+} Scene;
+
 class ofApp : public ofBaseApp {
 
 public:
@@ -34,8 +41,8 @@ public:
 	void saveButtonPressed(); //load button for bulb locations
 	void exit(); //remove listeners on app exit
 	
-
-	Bulb myBulb[NBULBS];
+	///--------- GENERAL PROGRAM STUFF --------------//
+	Bulb myBulb[NBULBS]; //create bulb array
 
 	ofImage tmpImage; //image for screengrab to be saved to. The bulbs pick their colour from this
 	ofColor tmpCol; //stores the colour value to pass to bulbs
@@ -43,13 +50,10 @@ public:
 	////Create DMX object
 	ofxDmx dmx;
 
-
 	//Import floor plan image
 	ofImage plan;
 	int planOffsetX;
 	int planOffsetY;
-
-	//bool drawPlan = false; //draw floor plan to screen
 
 
 	///--------- GUI STUFF --------------//
@@ -77,4 +81,8 @@ public:
 
 	ofxFFTBase fftChannelL;
 	ofxFFTBase fftChannelR;
+
+	///--------- SCENE STUFF --------------//
+	Scene myScene = SCENE_1;
+	void mainScene_1();
 };

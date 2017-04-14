@@ -146,44 +146,17 @@ void ofApp::draw() {
 	//ofSetColor(255, ofGetMouseY() / 4); //set transperency of test circle
 	//ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ofGetMouseX() / 5, ofGetMouseX() / 5);
 
-	///----------- DRAW FFT SHAPES ---------------//
-	drawFFT();
-
-	//grab screenshot  before bulbs are drawn
-	tmpImage.grabScreen(planOffsetX, planOffsetY, 1400, 674);
-
-	if (drawPlan) {
-		ofSetColor(255);
-		plan.draw(planOffsetX, planOffsetY);
-	} else {
-		ofNoFill();
-		ofSetColor(255);
-		ofDrawRectangle(470, 50, 1400, 674);
-	}
-
-	//tmpImage.save("screenshot.jpg");
-	for (int i = 0; i < NBULBS; i++) {
-		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < 1400
-			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < 674) {
-		tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
-		///uncomment to check colour being sent to bulb object
-		///printf("myBulb - colour: %i\n", tmpCol.r);
-		} else {
-			tmpCol = (0, 0, 0);
-		}
-
-		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
-		myBulb[i].draw(adjustedBrightness); //call draw sending colour value to object.
-
-		////*********send DMX Values***********////
-		//When sending to Mk2 you have to set universe as well as channel and value
-		//dmx.setLevel(channel, value, universe)
-		int thisLightValue = myBulb[i].dmxLightVal;
-		int thisID = myBulb[i].dmxID;
-		dmx.setLevel(thisID, thisLightValue, 2);
-
-		///uncomment to check outgoing DMX values
-		///printf("dmxVal: %i\n", thisLightValue);
+	///**** PICK SCENE ****///
+	switch (myScene)
+	{
+	case SCENE_1:
+		mainScene_1();
+			break;
+	case SCENE_2:
+		
+			break;
+	case SCENE_3:
+			break;
 	}
 
 	//***************UNCOMMENT TO SEND SIGNALS WHEN CONNECTED TO USBPRO*****************//
@@ -197,6 +170,55 @@ void ofApp::draw() {
 	gui.draw();
 }
 
+void ofApp::mainScene_1() {
+
+	///----------- DRAW FFT SHAPES ---------------//
+	drawFFT();
+
+	//grab screenshot  before bulbs are drawn
+	tmpImage.grabScreen(planOffsetX, planOffsetY, 1400, 674);
+
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	}
+	else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(470, 50, 1400, 674);
+	}
+
+	//tmpImage.save("screenshot.jpg");
+	for (int i = 0; i < NBULBS; i++) {
+		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < 1400
+			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < 674) {
+			tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
+																							  ///uncomment to check colour being sent to bulb object
+																							  ///printf("myBulb - colour: %i\n", tmpCol.r);
+		}
+		else {
+			tmpCol = (0, 0, 0);
+		}
+
+		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
+		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+
+		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+
+		myBulb[i].draw(adjustedBrightness); //call draw sending colour value to object.
+
+											////*********send DMX Values***********////
+											//When sending to Mk2 you have to set universe as well as channel and value
+											//dmx.setLevel(channel, value, universe)
+		int thisLightValue = myBulb[i].dmxLightVal;
+		int thisID = myBulb[i].dmxID;
+		dmx.setLevel(thisID, thisLightValue, 2);
+
+		///uncomment to check outgoing DMX values
+		///printf("dmxVal: %i\n", thisLightValue);
+	}
+
+}
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
 
