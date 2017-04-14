@@ -56,6 +56,7 @@ public:
 
 	ofxPanel gui;
 
+	ofParameter <float> masterBrightness = 255;
 	ofParameter<float> bulbSize = 20.0;
 	ofParameter<bool> drawPlan;
 	ofxButton loadBulbLocations;

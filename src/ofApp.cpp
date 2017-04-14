@@ -26,6 +26,7 @@ void ofApp::setup() {
 	saveBulbLocations.addListener(this, &ofApp::saveButtonPressed);
 
 	gui.setup();
+	gui.add(masterBrightness.set("master brightness", masterBrightness, 0.0, 255));
 	gui.add(bulbSize.set("bulb size", bulbSize, 0.1, 40.0));
 	gui.add(drawPlan.set("draw plan", false));
 	gui.add(loadBulbLocations.setup("load bulb locations"));
@@ -171,7 +172,8 @@ void ofApp::draw() {
 			tmpCol = (0, 0, 0);
 		}
 
-		myBulb[i].draw(tmpCol.r); //call draw sending colour value to object.
+		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+		myBulb[i].draw(adjustedBrightness); //call draw sending colour value to object.
 
 		////*********send DMX Values***********////
 		//When sending to Mk2 you have to set universe as well as channel and value
