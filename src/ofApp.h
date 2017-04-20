@@ -52,8 +52,10 @@ public:
 
 	//Import floor plan image
 	ofImage plan;
-	int planOffsetX;
-	int planOffsetY;
+	int planWidth; //width of plan image
+	int planHeight; //height of plan image
+	int planOffsetX; //amount to offset drawing from left edge of stage
+	int planOffsetY; //amount to offset drawing from top edge of stage
 
 
 	///--------- GUI STUFF --------------//

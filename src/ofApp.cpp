@@ -10,13 +10,19 @@ void ofApp::setup() {
 	////// LOAD PLAN IMAGE AND SET OFFSETS FOR COLOUR GRABBING ////////
 	plan.load("SGH - Catacomb Plans - 1400.jpg");
 
+	//return the width + height of image
+	planWidth = plan.getWidth();
+	planHeight = plan.getHeight();
+
+	//printf("planWidth: %i\n", planWidth);
+
 	//set colour grab offsets (Location to draw plan to)
 	planOffsetX = 470; // plan.getWidth();
 	planOffsetY = 50; // plan.getHeight();
 
 	//create bulb objects
 	for (int i = 0; i<NBULBS; i++) {
-		myBulb[i].setup(i, planOffsetX, planOffsetY, bulbSize);
+		myBulb[i].setup(i, planWidth, planHeight, planOffsetX, planOffsetY, bulbSize);
 	}
 
 
@@ -176,7 +182,7 @@ void ofApp::mainScene_1() {
 	drawFFT();
 
 	//grab screenshot  before bulbs are drawn
-	tmpImage.grabScreen(planOffsetX, planOffsetY, 1400, 674);
+	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
 
 	if (drawPlan) {
 		ofSetColor(255);
@@ -188,10 +194,9 @@ void ofApp::mainScene_1() {
 		ofDrawRectangle(470, 50, 1400, 674);
 	}
 
-	//tmpImage.save("screenshot.jpg");
 	for (int i = 0; i < NBULBS; i++) {
-		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < 1400
-			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < 674) {
+		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < planWidth
+			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < planHeight) {
 			tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
 																							  ///uncomment to check colour being sent to bulb object
 																							  ///printf("myBulb - colour: %i\n", tmpCol.r);

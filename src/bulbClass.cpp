@@ -7,15 +7,15 @@ Bulb::Bulb()
 }
 
 
-void Bulb::setup(int _ID, int _offX, int _offY, float _bulbSize) {
+void Bulb::setup(int _ID, int _planWidth, int _planHeight, int _offX, int _offY, float _bulbSize) {
 
 	dmxID = _ID + 1;
 
 	//Uncomment line below to print out DMX ID
 	//printf("ID: %i\n", dmxID);
 
-	x = ofRandom(_offX, _offX + 1400);
-	y = ofRandom(_offY, _offY + 674);
+	x = ofRandom(_offX, _offX + _planWidth);
+	y = ofRandom(_offY, _offY + _planHeight);
 
 	difx = 0;
 	dify = 0;
@@ -43,6 +43,7 @@ void Bulb::update(float _bulbSize) {
 
 	if (dim != _bulbSize) {
 		dim = _bulbSize;
+		txtOffsetX = dim + 5;
 	}
 	// Test if the cursor is over the box 
 
