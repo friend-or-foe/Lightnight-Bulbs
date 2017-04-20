@@ -68,6 +68,7 @@ public:
 
 	ofParameterGroup master;
 	ofParameterGroup scene_01; //controller group scene 1
+	ofParameterGroup scene_02; //controller group scene 1
 
 	ofParameterGroup scene_00; //controller group scene 0
 
@@ -92,15 +93,26 @@ public:
 	ofxFFTBase fftChannelL;
 	ofxFFTBase fftChannelR;
 
-	//GUI controllable
 	//---------------------------------------- scene 01
+	//GUI controllable
 	ofParameter<float> sc1_sampleScale = 600;
 	ofParameter<int> sc1_xLoc = 1163;
 	ofParameter<int> sc1_yLoc = 362;
 	ofParameter<float> sc1_opac = 20;
 
+	//---------------------------------------- scene 02
+	ofImage sc2_grad[8];
+	float sc2_baseRot = 0;
+	ofParameter<int> sc2_xLoc = 1163;
+	ofParameter<int> sc2_yLoc = 362;
+	ofParameter<float> sc2_rotSpeed = 4;
+	ofParameter<float> sc2_scale = 1;
+	ofParameter<float> sc2_opac = 20;
+	
+
 	//---------------------------------------- scene 00
 	ofParameter<int> sc0_allBrightness = 0;
+	
 
 	///--------- SCENE STUFF --------------//
 	Scene myScene = SCENE_1;

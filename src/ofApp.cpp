@@ -20,6 +20,12 @@ void ofApp::setup() {
 	planOffsetX = 470; // plan.getWidth();
 	planOffsetY = 50; // plan.getHeight();
 
+
+	//load scene 2 images
+	for (int i = 0; i < 8; i++) {
+		sc2_grad[i].load("gradient PNGS/circGrad0" + ofToString(i+1) + "-01.png");
+	}
+
 	//create bulb objects
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].setup(i, planWidth, planHeight, planOffsetX, planOffsetY, bulbSize);
@@ -174,7 +180,25 @@ void ofApp::mainScene_1() {
 void ofApp::mainScene_2() {
 
 	///----------- DRAW FFT SHAPES ---------------//
-	drawFFT_scene1();
+	//drawFFT_scene1();
+
+	ofSetColor(255, sc2_opac);
+
+	ofPushMatrix();
+	ofTranslate(sc2_xLoc, sc2_yLoc);
+	ofScale(sc2_scale, sc2_scale);
+	ofRotate(sc2_baseRot);
+	for (int i = 0; i < 8; i++) {
+		ofImage tempIm = sc2_grad[i];
+		tempIm.setAnchorPercent(0.5, 0.5);
+		tempIm.draw(0, 0);
+		ofRotate(180);
+		tempIm.draw(0, 0);
+	}
+	
+	ofPopMatrix();
+
+	sc2_baseRot += sc2_rotSpeed;
 
 	//grab screenshot  before bulbs are drawn
 	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
@@ -187,6 +211,28 @@ void ofApp::mainScene_2() {
 		ofNoFill();
 		ofSetColor(255);
 		ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight);
+	}
+
+	for (int i = 0; i < NBULBS; i++) {
+		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < planWidth
+			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < planHeight) {
+			tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
+																							  ///uncomment to check colour being sent to bulb object
+																							  ///printf("myBulb - colour: %i\n", tmpCol.r);
+		}
+		else {
+			tmpCol = (0, 0, 0);
+		}
+
+		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
+		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+
+		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+
+		myBulb[i].draw_sc1(adjustedBrightness); //call draw sending colour value to object.
+
+		sendDMXVals(i);
+
 	}
 
 
@@ -324,11 +370,22 @@ void ofApp::initGUI() {
 	scene_01.setName("SCENE 01");
 	scene_01.add(sc1_sampleScale.set("sample scale", sc1_sampleScale, 0.0, 1000));
 	scene_01.add(sc1_xLoc.set("X location", sc1_xLoc, 0, ofGetWidth()));
-	scene_01.add(sc1_yLoc.set("Y location", sc1_yLoc, 0, ofGetWidth()));
+	scene_01.add(sc1_yLoc.set("Y location", sc1_yLoc, 0, ofGetHeight()));
 	scene_01.add(sc1_opac.set("circle opacity", sc1_opac, 0, 255));
 
 	gui.add(scene_01);
 
+	//****** SCENE 2 GUI CONTROLS ********//
+	scene_02.setName("SCENE 02");
+	//scene_01.add(sc1_sampleScale.set("sample scale", sc1_sampleScale, 0.0, 1000));
+	scene_02.add(sc2_xLoc.set("X location", sc2_xLoc, 0, ofGetWidth()));
+	scene_02.add(sc2_yLoc.set("Y location", sc2_yLoc, 0, ofGetHeight()));
+	scene_02.add(sc2_rotSpeed.set("rotation speed", sc2_rotSpeed, 0, 10));
+	scene_02.add(sc2_scale.set("scale", sc2_scale, 0, 2.0));
+	scene_02.add(sc2_opac.set("circle opacity", sc2_opac, 0, 255));
+
+
+	gui.add(scene_02);
 	//****** SCENE 0 GUI CONTROLS ********//
 	scene_00.setName("SCENE 00");
 	scene_00.add(sc0_allBrightness.set("bulb brightness", sc0_allBrightness, 0, 255));
