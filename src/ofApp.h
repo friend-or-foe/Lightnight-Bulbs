@@ -5,6 +5,7 @@
 #include "ofxDmx.h" //include ofxDM addon
 #include "ofxGui.h" //include GUI addon
 #include "ofxXmlSettings.h"
+#include "ofxMidi.h" 
 
 #include "ofxFFTBase.h"
 
@@ -18,7 +19,7 @@ typedef enum {
 	SCENE_0,
 } Scene;
 
-class ofApp : public ofBaseApp {
+class ofApp : public ofBaseApp, public ofxMidiListener {
 
 public:
 	void setup();
@@ -42,6 +43,13 @@ public:
 	void saveButtonPressed(); //load button for bulb locations
 	void exit(); //remove listeners on app exit
 	
+	///--------- MIDI STUFF --------------//
+	void initMIDI();
+	void newMidiMessage(ofxMidiMessage& eventArgs);
+	ofxMidiIn midiIn;
+	ofxMidiMessage midiMessage;
+	stringstream MIDItext;
+
 	///--------- GENERAL PROGRAM STUFF --------------//
 	Bulb myBulb[NBULBS]; //create bulb array
 

@@ -95,9 +95,12 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src\desktop;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src\ios;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\pgmidi;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -118,9 +121,12 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDir
       <WarningLevel>Level3</WarningLevel>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src\desktop;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src\ios;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\pgmidi;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -137,9 +143,12 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDir
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src\desktop;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src\ios;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\pgmidi;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -161,9 +170,12 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDir
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;
-D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGui\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxDmx\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\src;D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src\desktop;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\src\ios;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\pgmidi;
+D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -192,6 +204,14 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDir
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxSlider.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxToggle.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMidi\libs\rtmidi\RtMidi.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMidi\src\desktop\ofxRtMidiIn.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMidi\src\desktop\ofxRtMidiOut.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMidi\src\ofxBaseMidi.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMidi\src\ofxMidi.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMidi\src\ofxMidiIn.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMidi\src\ofxMidiMessage.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxMidi\src\ofxMidiOut.cpp" />
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
@@ -215,6 +235,26 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxFFT\libs;%(AdditionalIncludeDir
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxSlider.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxToggle.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\libs\pgmidi\iOSVersionDetection.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\libs\pgmidi\PGArc.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\libs\pgmidi\PGMidi.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\libs\pgmidi\PGMidiAllSources.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\libs\pgmidi\PGMidiFind.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\libs\rtmidi\RtMidi.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\desktop\ofxRtMidiIn.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\desktop\ofxRtMidiOut.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ios\ofxPGMidiContext.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ios\ofxPGMidiDelegate.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ios\ofxPGMidiIn.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ios\ofxPGMidiOut.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ios\ofxPGMidiSourceDelegate.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ofxBaseMidi.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ofxMidi.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ofxMidiConstants.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ofxMidiIn.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ofxMidiMessage.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ofxMidiOut.h" />
+    <ClInclude Include="..\..\..\addons\ofxMidi\src\ofxMidiTypes.h" />
     <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
     <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
     <ClInclude Include="src\bulbClass.h" />
