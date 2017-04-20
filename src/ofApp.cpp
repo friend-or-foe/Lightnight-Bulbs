@@ -8,7 +8,7 @@ void ofApp::setup() {
 	dmx.activateMk2(); //Un comment this if using dmxUSBPro mk2
 
 	////// LOAD PLAN IMAGE AND SET OFFSETS FOR COLOUR GRABBING ////////
-	plan.load("SGH - Catacomb Plans - 1400.jpg");
+	plan.load("SGH - Catacomb Plans - 1200.jpg");
 
 	//return the width + height of image
 	planWidth = plan.getWidth();
@@ -41,6 +41,7 @@ void ofApp::setup() {
 	initAudio();
 
 	ofSetFrameRate(200);
+	ofBackground(40);
 }
 
 //--------------------------------------------------------------
@@ -148,6 +149,9 @@ void ofApp::draw() {
 	case SCENE_3:
 			break;
 
+	case SCENE_9:
+		mainScene_9();
+		break;
 	case SCENE_0:
 		mainScene_0();
 		break;
@@ -286,6 +290,47 @@ void ofApp::mainScene_2() {
 
 }
 
+//-------------------------------------------------------------- SCENE 9 - Glimmer / Noise
+void ofApp::mainScene_9() {
+
+
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	}
+	else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight);
+	}
+
+	//int myBright;
+
+	float myBright;
+	float adjustedBrightness = 0;
+	
+	for (int i = 0; i < NBULBS; i++) {
+		int randChance = ofRandom(1000);
+		if (randChance < sc9_changeChance){
+				myBright = sc9_allBrightness - (ofRandom(sc9_noiseScale*sc9_allBrightness));// (ofNoise(ofRandom(sc9_noiseVal))*sc9_noiseScale);
+			
+		//printf("myBulb - colour: %i\n", myBright);
+		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
+		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+
+				adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+			}
+			else {
+				adjustedBrightness = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
+			}
+			myBulb[i].draw_sc0(adjustedBrightness); //call draw sending colour value to object.
+
+			sendDMXVals(i);
+	
+	}
+	
+}
+
 //-------------------------------------------------------------- SCENE 0 - test/warmer scene
 void ofApp::mainScene_0() {
 
@@ -331,6 +376,9 @@ void ofApp::keyPressed(int key) {
 		myScene = SCENE_3;
 		break;
 
+	case '9':
+		myScene = SCENE_9;
+		break;
 	case '0':
 		myScene = SCENE_0;
 		break;
@@ -432,8 +480,17 @@ void ofApp::initGUI() {
 	scene_02.add(sc2_scale.set("scale", sc2_scale, 0, 2.0));
 	scene_02.add(sc2_opac.set("circle opacity", sc2_opac, 0, 255));
 
-
 	gui.add(scene_02);
+
+	//****** SCENE 9 GUI CONTROLS ********//
+	scene_09.setName("SCENE 09");
+	scene_09.add(sc9_allBrightness.set("bulb brightness", sc9_allBrightness, 0, 255));
+	scene_09.add(sc9_flashTimer.set("flash speed", sc9_flashTimer, 0.0, 4000));
+	scene_09.add(sc9_noiseScale.set("noise scale", sc9_noiseScale, 0.0, 1));
+	scene_09.add(sc9_changeChance.set("chance of change", sc9_changeChance, 0.0, 1000));
+
+	gui.add(scene_09);
+
 	//****** SCENE 0 GUI CONTROLS ********//
 	scene_00.setName("SCENE 00");
 	scene_00.add(sc0_allBrightness.set("bulb brightness", sc0_allBrightness, 0, 255));

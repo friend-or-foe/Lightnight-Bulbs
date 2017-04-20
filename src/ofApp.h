@@ -16,6 +16,7 @@ typedef enum {
 	SCENE_1, // these can have any name you want, eg SCENE_BREATH etc  
 	SCENE_2,
 	SCENE_3,
+	SCENE_9,
 	SCENE_0,
 } Scene;
 
@@ -78,6 +79,7 @@ public:
 	ofParameterGroup scene_01; //controller group scene 1
 	ofParameterGroup scene_02; //controller group scene 1
 
+	ofParameterGroup scene_09; //controller group scene 9 - glimmer
 	ofParameterGroup scene_00; //controller group scene 0
 
 	ofParameter <float> masterBrightness = 255;
@@ -117,6 +119,12 @@ public:
 	ofParameter<float> sc2_scale = 1;
 	ofParameter<float> sc2_opac = 20;
 	
+	//---------------------------------------- scene 09
+	ofParameter<int> sc9_allBrightness = 0;
+	ofParameter<int> sc9_flashTimer = 1000;
+	ofParameter<float> sc9_noiseScale = 0;
+	ofParameter<float> sc9_changeChance = 0;
+	int sc9_flashCount = 0;
 
 	//---------------------------------------- scene 00
 	ofParameter<int> sc0_allBrightness = 0;
@@ -127,5 +135,6 @@ public:
 	void mainScene_1();
 	void mainScene_2();
 
+	void mainScene_9();
 	void mainScene_0();
 };
