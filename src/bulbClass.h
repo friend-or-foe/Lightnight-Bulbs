@@ -27,7 +27,7 @@ public: // place public functions or variables declared here
 	//scene draw functions
 	void draw_sc1(int _tmpCol); //scene 1
 
-
+	void draw_sc9(int _tmpCol, float _fadeSpeed); //Scene 0
 	void draw_sc0(int _tmpCol); //Scene 0 is the test scene - all bulbs controlled by a master fader.
 
 
@@ -62,5 +62,7 @@ public: // place public functions or variables declared here
 	Bulb(); //constructor - used to initialise object, if
 			//no properties are passed the program sets them to the default value
 
+
+	bool myTrigger = false;
 };
 

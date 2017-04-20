@@ -309,9 +309,13 @@ void ofApp::mainScene_9() {
 	float myBright;
 	float adjustedBrightness = 0;
 	
+	float mainBright = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
+	//float fadeSpeed = sc9_fadeSpeed;
+
 	for (int i = 0; i < NBULBS; i++) {
 		int randChance = ofRandom(1000);
 		if (randChance < sc9_changeChance){
+			
 				myBright = sc9_allBrightness - (ofRandom(sc9_noiseScale*sc9_allBrightness));// (ofNoise(ofRandom(sc9_noiseVal))*sc9_noiseScale);
 			
 		//printf("myBulb - colour: %i\n", myBright);
@@ -319,11 +323,11 @@ void ofApp::mainScene_9() {
 		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
 
 				adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
-			}
-			else {
-				adjustedBrightness = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
-			}
-			myBulb[i].draw_sc0(adjustedBrightness); //call draw sending colour value to object.
+				myBulb[i].myTrigger = true;
+				myBulb[i].dmxLightVal = adjustedBrightness;
+		}
+
+			myBulb[i].draw_sc9(mainBright, sc9_fadeSpeed); //call draw sending colour value to object.
 
 			sendDMXVals(i);
 	
@@ -485,7 +489,7 @@ void ofApp::initGUI() {
 	//****** SCENE 9 GUI CONTROLS ********//
 	scene_09.setName("SCENE 09");
 	scene_09.add(sc9_allBrightness.set("bulb brightness", sc9_allBrightness, 0, 255));
-	scene_09.add(sc9_flashTimer.set("flash speed", sc9_flashTimer, 0.0, 4000));
+	scene_09.add(sc9_fadeSpeed.set("fade speed", sc9_fadeSpeed, 0.0, 1.0));
 	scene_09.add(sc9_noiseScale.set("noise scale", sc9_noiseScale, 0.0, 1));
 	scene_09.add(sc9_changeChance.set("chance of change", sc9_changeChance, 0.0, 1000));
 

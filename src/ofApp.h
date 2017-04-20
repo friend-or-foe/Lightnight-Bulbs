@@ -121,7 +121,7 @@ public:
 	
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;
-	ofParameter<int> sc9_flashTimer = 1000;
+	ofParameter<float> sc9_fadeSpeed = 0.1;
 	ofParameter<float> sc9_noiseScale = 0;
 	ofParameter<float> sc9_changeChance = 0;
 	int sc9_flashCount = 0;
