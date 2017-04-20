@@ -62,6 +62,8 @@ public:
 
 	ofxPanel gui;
 
+	ofParameterGroup master;
+
 	ofParameter <float> masterBrightness = 255;
 	ofParameter<float> bulbSize = 20.0;
 	ofParameter<bool> drawPlan;
@@ -72,7 +74,7 @@ public:
 	void initAudio();
 	void drawSamples(vector<float> samples);
 	void audioIn(float * input, int bufferSize, int nChannels);
-	void drawFFT();
+	void drawFFT_scene1();
 
 	ofSoundStream soundStream;
 	vector<float> samplesChannelL;

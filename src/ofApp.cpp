@@ -28,15 +28,22 @@ void ofApp::setup() {
 
 
 	///--------- GUI STUFF --------------//
+	//****** MASTER GUI CONTROLS ********//
 	loadBulbLocations.addListener(this, &ofApp::loadButtonPressed);
 	saveBulbLocations.addListener(this, &ofApp::saveButtonPressed);
 
 	gui.setup();
-	gui.add(masterBrightness.set("master brightness", masterBrightness, 0.0, 255));
-	gui.add(bulbSize.set("bulb size", bulbSize, 0.1, 40.0));
-	gui.add(drawPlan.set("draw plan", false));
+
+	master.setName("Master");
+	master.add(masterBrightness.set("master brightness", masterBrightness, 0.0, 255));
+	master.add(bulbSize.set("bulb size", bulbSize, 0.1, 40.0));
+	master.add(drawPlan.set("draw plan", false));
+	gui.add(master);
+
 	gui.add(loadBulbLocations.setup("load bulb locations"));
 	gui.add(saveBulbLocations.setup("save bulb locations"));
+
+	//****** SCENE 1 GUI CONTROLS ********//
 
 	///--------- FFT STUFF --------------//
 	initAudio();
@@ -123,7 +130,7 @@ void ofApp::update() {
 
 }
 
-void ofApp::drawFFT() {
+void ofApp::drawFFT_scene1() {
 
 	ofSetColor(255, 20);
 	ofPushMatrix();
@@ -146,7 +153,7 @@ void ofApp::draw() {
 
 	ofFill(); //set fill back on
 	ofSetColor(0);
-	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight()); //draw rectanle to wipe previous frame
+	ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight); //draw rectanle to wipe previous frame
 
 	
 	//ofSetColor(255, ofGetMouseY() / 4); //set transperency of test circle
@@ -179,7 +186,7 @@ void ofApp::draw() {
 void ofApp::mainScene_1() {
 
 	///----------- DRAW FFT SHAPES ---------------//
-	drawFFT();
+	drawFFT_scene1();
 
 	//grab screenshot  before bulbs are drawn
 	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
@@ -191,7 +198,7 @@ void ofApp::mainScene_1() {
 	else {
 		ofNoFill();
 		ofSetColor(255);
-		ofDrawRectangle(470, 50, 1400, 674);
+		ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight);
 	}
 
 	for (int i = 0; i < NBULBS; i++) {
