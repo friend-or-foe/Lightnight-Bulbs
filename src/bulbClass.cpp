@@ -69,7 +69,7 @@ void Bulb::update(float _bulbSize) {
 
 }
 
-void Bulb::draw(int _tmpCol) {
+void Bulb::draw_sc1(int _tmpCol) {
 
 	//************** GET PIXEL COLOUR UNDER OBJECT (NOT NEEDED IF USING SCREENSHOT APPROACH)**************//
 	//glReadPixels(x, ofGetHeight() - y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, colorGet);
@@ -85,15 +85,30 @@ void Bulb::draw(int _tmpCol) {
 	//draw outline and text
 	ofNoFill();
 	ofSetColor(color);
-	ofSetLineWidth(3);
+	ofSetLineWidth(1);
 	ofDrawCircle(x, y, dim);
 
 	ofDrawBitmapString(dmxID, x + txtOffsetX, y + txtOffsetY);
 
-	////*********send DMX Values***********////
-	//dmx.setLevel(ID, chan1);
+}
 
-	//dmx.update();
+
+void Bulb::draw_sc0(int _tmpCol) {
+
+	//switch on fill and set colour to show brightness
+	dmxLightVal = _tmpCol; // colorGet[0];
+	ofFill();
+	ofSetColor(dmxLightVal, 0, 0);
+	ofDrawCircle(x, y, dim);
+
+	//draw outline and text
+	ofNoFill();
+	ofSetColor(color);
+	ofSetLineWidth(1);
+	ofDrawCircle(x, y, dim);
+
+	ofDrawBitmapString(dmxID, x + txtOffsetX, y + txtOffsetY);
+
 }
 
 void Bulb::mousePressed() {

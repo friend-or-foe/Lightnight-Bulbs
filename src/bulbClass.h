@@ -20,10 +20,16 @@ public: // place public functions or variables declared here
 		//methods, equivalent to specific functions of your class objects
 	void setup(int _ID, int _planWidth, int planHeight, int _offX, int _offY, float _bulbSize); //arguments you want to pass must have temp variable names inserted here
 	void update(float _bulbSize);
-	void draw(int _tmpCol);
 	void mousePressed();
 	void mouseDragged();
 	void mouseReleased();
+
+	//scene draw functions
+	void draw_sc1(int _tmpCol); //scene 1
+
+
+	void draw_sc0(int _tmpCol); //Scene 0 is the test scene - all bulbs controlled by a master fader.
+
 
 	void setLoc(int _x, int _y);
 	//variables

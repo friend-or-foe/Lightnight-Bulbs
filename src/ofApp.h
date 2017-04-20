@@ -14,7 +14,8 @@
 typedef enum {
 	SCENE_1, // these can have any name you want, eg SCENE_BREATH etc  
 	SCENE_2,
-	SCENE_3
+	SCENE_3,
+	SCENE_0,
 } Scene;
 
 class ofApp : public ofBaseApp {
@@ -49,6 +50,7 @@ public:
 
 	////Create DMX object
 	ofxDmx dmx;
+	void sendDMXVals(int _bulbNum); //function to send DMX Values
 
 	//Import floor plan image
 	ofImage plan;
@@ -60,9 +62,14 @@ public:
 
 	///--------- GUI STUFF --------------//
 
+	void initGUI();
+
 	ofxPanel gui;
 
 	ofParameterGroup master;
+	ofParameterGroup scene_01; //controller group scene 1
+
+	ofParameterGroup scene_00; //controller group scene 0
 
 	ofParameter <float> masterBrightness = 255;
 	ofParameter<float> bulbSize = 20.0;
@@ -72,7 +79,7 @@ public:
 
 	///--------- FFT STUFF --------------//
 	void initAudio();
-	void drawSamples(vector<float> samples);
+	void drawSamples_scene1(vector<float> samples);
 	void audioIn(float * input, int bufferSize, int nChannels);
 	void drawFFT_scene1();
 
@@ -81,12 +88,24 @@ public:
 	vector<float> samplesChannelR;
 
 	float * fftSmooth;
-	float sampleScale = 600;
 
 	ofxFFTBase fftChannelL;
 	ofxFFTBase fftChannelR;
 
+	//GUI controllable
+	//---------------------------------------- scene 01
+	ofParameter<float> sc1_sampleScale = 600;
+	ofParameter<int> sc1_xLoc = 1163;
+	ofParameter<int> sc1_yLoc = 362;
+	ofParameter<float> sc1_opac = 20;
+
+	//---------------------------------------- scene 00
+	ofParameter<int> sc0_allBrightness = 0;
+
 	///--------- SCENE STUFF --------------//
 	Scene myScene = SCENE_1;
 	void mainScene_1();
+	void mainScene_2();
+
+	void mainScene_0();
 };

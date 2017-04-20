@@ -28,74 +28,12 @@ void ofApp::setup() {
 
 
 	///--------- GUI STUFF --------------//
-	//****** MASTER GUI CONTROLS ********//
-	loadBulbLocations.addListener(this, &ofApp::loadButtonPressed);
-	saveBulbLocations.addListener(this, &ofApp::saveButtonPressed);
-
-	gui.setup();
-
-	master.setName("Master");
-	master.add(masterBrightness.set("master brightness", masterBrightness, 0.0, 255));
-	master.add(bulbSize.set("bulb size", bulbSize, 0.1, 40.0));
-	master.add(drawPlan.set("draw plan", false));
-	gui.add(master);
-
-	gui.add(loadBulbLocations.setup("load bulb locations"));
-	gui.add(saveBulbLocations.setup("save bulb locations"));
-
-	//****** SCENE 1 GUI CONTROLS ********//
+	initGUI();
 
 	///--------- FFT STUFF --------------//
 	initAudio();
 
 	ofSetFrameRate(200);
-}
-
-void ofApp::initAudio() {
-	
-	int channelsOut = 0;        // number of requested output channels (i.e. 2 for stereo).
-	int channelsIn = 2;         // number of requested input channels.
-	int sampleRate = 44100;     // requested sample rate (44100 is typical).
-	int bufferSize = 1024;       // requested buffer size (256 is typical).
-	int numOfBuffers = 4;       // number of buffers to queue, less buffers will be more responsive, but less stable.
-
-	soundStream.setup(this, channelsOut, channelsIn, sampleRate, bufferSize, numOfBuffers);
-
-	samplesChannelL.assign(bufferSize, 0.0);
-	samplesChannelR.assign(bufferSize, 0.0);
-
-	fftSmooth = new float[bufferSize];
-	for (int i = 0; i < bufferSize; i++) {
-		fftSmooth[i] = 0;
-	}
-
-
-}
-
-void ofApp::drawSamples(vector<float> samples) {
-
-	int sampleWidth = ofGetWidth() / samples.size();
-	int sampleHeight = ofGetHeight() / 2;
-	int numOfSamples = samples.size();
-
-	for (int i = 0; i<numOfSamples; i+=10) {
-		int x = ofMap(i, 0, numOfSamples - 1, 0, ofGetWidth() - sampleWidth);
-		int y = 0;
-
-		//smoothing for fft values
-		float value = samples[i] * sampleScale;// *= 0.993f;
-		fftSmooth[i] *= 0.98f;
-		if (fftSmooth[i] < value) {
-			fftSmooth[i] = value;
-		}
-
-		int w = 1 + (-fftSmooth[i]);
-		//int h = -samples[i] * sampleHeight;
-
-		//ofDrawEllipse(x, y, w, w);
-		ofDrawEllipse(planOffsetX + 700, y, w, w);
-	}
-
 }
 
 //--------------------------------------------------------------
@@ -130,22 +68,7 @@ void ofApp::update() {
 
 }
 
-void ofApp::drawFFT_scene1() {
 
-	ofSetColor(255, 20);
-	ofPushMatrix();
-	ofTranslate(0, 362);
-	drawSamples(fftChannelL.getFftNormData());
-	ofPopMatrix();
-
-	//uncomment to draw right channel
-	/*
-	ofPushMatrix();
-	ofTranslate(0, ofGetHeight() * 0.75);
-	drawSamples(fftChannelR.getFftNormData());
-	ofPopMatrix();
-	*/
-}
 //--------------------------------------------------------------
 void ofApp::draw() {
 
@@ -166,10 +89,15 @@ void ofApp::draw() {
 		mainScene_1();
 			break;
 	case SCENE_2:
-		
+		mainScene_2();
 			break;
 	case SCENE_3:
 			break;
+
+	case SCENE_0:
+		mainScene_0();
+		break;
+
 	}
 
 	//***************UNCOMMENT TO SEND SIGNALS WHEN CONNECTED TO USBPRO*****************//
@@ -183,6 +111,23 @@ void ofApp::draw() {
 	gui.draw();
 }
 
+void ofApp::sendDMXVals(int _bulbNum) {
+
+	////*********send DMX Values***********////
+	//When sending to Mk2 you have to set universe as well as channel and value
+	//dmx.setLevel(channel, value, universe)
+
+	int thisLightValue = myBulb[_bulbNum].dmxLightVal;
+	int thisID = myBulb[_bulbNum].dmxID;
+	dmx.setLevel(thisID, thisLightValue, 2);
+
+	///uncomment to check outgoing DMX values
+	///printf("dmxVal: %i\n", thisLightValue);
+
+}
+////************************************************************ ALL SCENE FUNCTIONS ********************/////
+
+//-------------------------------------------------------------- SCENE 01
 void ofApp::mainScene_1() {
 
 	///----------- DRAW FFT SHAPES ---------------//
@@ -205,8 +150,8 @@ void ofApp::mainScene_1() {
 		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < planWidth
 			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < planHeight) {
 			tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
-																							  ///uncomment to check colour being sent to bulb object
-																							  ///printf("myBulb - colour: %i\n", tmpCol.r);
+			///uncomment to check colour being sent to bulb object
+			///printf("myBulb - colour: %i\n", tmpCol.r);
 		}
 		else {
 			tmpCol = (0, 0, 0);
@@ -217,17 +162,63 @@ void ofApp::mainScene_1() {
 
 		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
 
-		myBulb[i].draw(adjustedBrightness); //call draw sending colour value to object.
+		myBulb[i].draw_sc1(adjustedBrightness); //call draw sending colour value to object.
 
-											////*********send DMX Values***********////
-											//When sending to Mk2 you have to set universe as well as channel and value
-											//dmx.setLevel(channel, value, universe)
-		int thisLightValue = myBulb[i].dmxLightVal;
-		int thisID = myBulb[i].dmxID;
-		dmx.setLevel(thisID, thisLightValue, 2);
+		sendDMXVals(i);
+		
+	}
 
-		///uncomment to check outgoing DMX values
-		///printf("dmxVal: %i\n", thisLightValue);
+}
+
+//-------------------------------------------------------------- SCENE 02
+void ofApp::mainScene_2() {
+
+	///----------- DRAW FFT SHAPES ---------------//
+	drawFFT_scene1();
+
+	//grab screenshot  before bulbs are drawn
+	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
+
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	}
+	else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight);
+	}
+
+
+}
+
+//-------------------------------------------------------------- SCENE 0 - test/warmer scene
+void ofApp::mainScene_0() {
+
+
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	}
+	else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight);
+	}
+
+	//int myBright;
+
+	for (int i = 0; i < NBULBS; i++) {
+		
+		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
+		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+
+		float adjustedBrightness = ofMap(sc0_allBrightness, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+
+		myBulb[i].draw_sc0(adjustedBrightness); //call draw sending colour value to object.
+
+		sendDMXVals(i);
+
 	}
 
 }
@@ -244,6 +235,10 @@ void ofApp::keyPressed(int key) {
 		break;
 	case '3':
 		myScene = SCENE_3;
+		break;
+
+	case '0':
+		myScene = SCENE_0;
 		break;
 	}
 
@@ -305,7 +300,117 @@ void ofApp::dragEvent(ofDragInfo dragInfo) {
 
 }
 
+////************************************************************ ALL INIT CALLS ********************/////
+
+//-------------------------------------------------------------- GUI
+void ofApp::initGUI() {
+
+	//****** MASTER GUI CONTROLS ********//
+	loadBulbLocations.addListener(this, &ofApp::loadButtonPressed);
+	saveBulbLocations.addListener(this, &ofApp::saveButtonPressed);
+
+	gui.setup();
+
+	master.setName("Master");
+	master.add(masterBrightness.set("master brightness", masterBrightness, 0.0, 255));
+	master.add(bulbSize.set("bulb size", bulbSize, 0.1, 40.0));
+	master.add(drawPlan.set("draw plan", false));
+	gui.add(master);
+
+	gui.add(loadBulbLocations.setup("load bulb locations"));
+	gui.add(saveBulbLocations.setup("save bulb locations"));
+
+	//****** SCENE 1 GUI CONTROLS ********//
+	scene_01.setName("SCENE 01");
+	scene_01.add(sc1_sampleScale.set("sample scale", sc1_sampleScale, 0.0, 1000));
+	scene_01.add(sc1_xLoc.set("X location", sc1_xLoc, 0, ofGetWidth()));
+	scene_01.add(sc1_yLoc.set("Y location", sc1_yLoc, 0, ofGetWidth()));
+	scene_01.add(sc1_opac.set("circle opacity", sc1_opac, 0, 255));
+
+	gui.add(scene_01);
+
+	//****** SCENE 0 GUI CONTROLS ********//
+	scene_00.setName("SCENE 00");
+	scene_00.add(sc0_allBrightness.set("bulb brightness", sc0_allBrightness, 0, 255));
+
+	gui.add(scene_00);
+
+}
+
+//-------------------------------------------------------------- AUDIO
+
+void ofApp::initAudio() {
+
+	int channelsOut = 0;        // number of requested output channels (i.e. 2 for stereo).
+	int channelsIn = 2;         // number of requested input channels.
+	int sampleRate = 44100;     // requested sample rate (44100 is typical).
+	int bufferSize = 1024;       // requested buffer size (256 is typical).
+	int numOfBuffers = 4;       // number of buffers to queue, less buffers will be more responsive, but less stable.
+
+	soundStream.setup(this, channelsOut, channelsIn, sampleRate, bufferSize, numOfBuffers);
+
+	samplesChannelL.assign(bufferSize, 0.0);
+	samplesChannelR.assign(bufferSize, 0.0);
+
+	fftSmooth = new float[bufferSize];
+	for (int i = 0; i < bufferSize; i++) {
+		fftSmooth[i] = 0;
+	}
+
+
+}
+
+////************************************************************ ALL FFT DRAWING CALLS ********************/////
+
+//-------------------------------------------------------------- SCENE 1
+void ofApp::drawFFT_scene1() {
+
+	ofSetColor(255, sc1_opac);
+	ofPushMatrix();
+	ofTranslate(sc1_xLoc, sc1_yLoc);
+	drawSamples_scene1(fftChannelL.getFftNormData());
+	ofPopMatrix();
+
+	//uncomment to draw right channel
+	/*
+	ofPushMatrix();
+	ofTranslate(0, ofGetHeight() * 0.75);
+	drawSamples(fftChannelR.getFftNormData());
+	ofPopMatrix();
+	*/
+}
+
+void ofApp::drawSamples_scene1(vector<float> samples) {
+
+	int sampleWidth = ofGetWidth() / samples.size();
+	int sampleHeight = ofGetHeight() / 2;
+	int numOfSamples = samples.size();
+
+	for (int i = 0; i<numOfSamples; i += 10) {
+		int x = 0; // ofMap(i, 0, numOfSamples - 1, 0, ofGetWidth() - sampleWidth);
+		int y = 0;
+
+		//smoothing for fft values
+		float value = samples[i] * sc1_sampleScale;// *= 0.993f;
+		fftSmooth[i] *= 0.98f;
+		if (fftSmooth[i] < value) {
+			fftSmooth[i] = value;
+		}
+
+		int w = 1 + (-fftSmooth[i]);
+		//int h = -samples[i] * sampleHeight;
+
+		//ofDrawEllipse(x, y, w, w);
+		ofDrawEllipse(0, 0, w, w);
+	}
+
+}
+
+//-------------------------------------------------------------- SCENE 2
+
+
 ////******************* XML LOAD/SAVE BULB LOCATION FUNCTIONS ********************/////
+
 //--------------------------------------------------------------
 void ofApp::loadButtonPressed() {
 	ofxXmlSettings settings;
