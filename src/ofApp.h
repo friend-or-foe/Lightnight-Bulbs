@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "bulbClass.h"
+#include "Spinners.h"
+
 #include "ofxDmx.h" //include ofxDM addon
 #include "ofxGui.h" //include GUI addon
 #include "ofxXmlSettings.h"
@@ -54,6 +56,7 @@ public:
 
 	///--------- GENERAL PROGRAM STUFF --------------//
 	Bulb myBulb[NBULBS]; //create bulb array
+	Spinners mySpinner[NSPINNERS];
 
 	ofImage tmpImage; //image for screengrab to be saved to. The bulbs pick their colour from this
 	ofColor tmpCol; //stores the colour value to pass to bulbs
@@ -92,6 +95,7 @@ public:
 	///--------- FFT STUFF --------------//
 	void initAudio();
 	void drawSamples_scene1(vector<float> samples);
+
 	void audioIn(float * input, int bufferSize, int nChannels);
 	void drawFFT_scene1();
 
@@ -118,7 +122,7 @@ public:
 	ofParameter<int> sc2_yLoc = 362;
 	ofParameter<float> sc2_rotSpeed = 4;
 	ofParameter<float> sc2_scale = 1;
-	ofParameter<float> sc2_opac = 20;
+	ofParameter<float> sc2_opac = 255;
 	
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;

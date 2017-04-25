@@ -26,6 +26,13 @@ void ofApp::setup() {
 		sc2_grad[i].load("gradient PNGS/circGrad0" + ofToString(i+1) + "-01.png");
 	}
 
+	//create spin objects
+	for (int i = 0; i < NSPINNERS; i++) {
+		ofImage tempImage;
+		if (i < 8) { tempImage = sc2_grad[i];} else { tempImage = sc2_grad[i-8]; }
+		mySpinner[i].setup(i, tempImage);
+	}
+
 	//create bulb objects
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].setup(i, planWidth, planHeight, planOffsetX, planOffsetY, bulbSize);
@@ -232,20 +239,27 @@ void ofApp::mainScene_1() {
 void ofApp::mainScene_2() {
 
 	///----------- DRAW FFT SHAPES ---------------//
-	//drawFFT_scene1();
+	//analyseFFT_scene2(fftChannelL.getFftNormData());
 
-	ofSetColor(255, sc2_opac);
+	//ofSetColor(255, sc2_opac);
+	vector<float> samples = fftChannelL.getFftNormData();
 
 	ofPushMatrix();
 	ofTranslate(sc2_xLoc, sc2_yLoc);
 	ofScale(sc2_scale, sc2_scale);
 	ofRotate(sc2_baseRot);
-	for (int i = 0; i < 8; i++) {
-		ofImage tempIm = sc2_grad[i];
-		tempIm.setAnchorPercent(0.5, 0.5);
-		tempIm.draw(0, 0);
-		ofRotate(180);
-		tempIm.draw(0, 0);
+
+	for (int i = 0; i < NSPINNERS; i++) {
+		//smoothing for fft values
+		float value = samples[i];// *= 0.993f;
+		fftSmooth[i*10] *= 0.90f;
+		if (fftSmooth[i * 10] < value) {
+			fftSmooth[i * 10] = value;
+		}
+		ofSetColor(255, abs(fftSmooth[i*10] * sc2_opac));
+		//ofImage tempIm = sc2_grad[i];
+		mySpinner[i].update();
+		mySpinner[i].draw();
 	}
 	
 	ofPopMatrix();
@@ -482,7 +496,7 @@ void ofApp::initGUI() {
 	scene_02.add(sc2_yLoc.set("Y location", sc2_yLoc, 0, ofGetHeight()));
 	scene_02.add(sc2_rotSpeed.set("rotation speed", sc2_rotSpeed, 0, 10));
 	scene_02.add(sc2_scale.set("scale", sc2_scale, 0, 2.0));
-	scene_02.add(sc2_opac.set("circle opacity", sc2_opac, 0, 255));
+	scene_02.add(sc2_opac.set("circle opacity", sc2_opac, 0, 2000));
 
 	gui.add(scene_02);
 
