@@ -10,6 +10,7 @@
 #include "ofxFFTBase.h"
 
 #define NBULBS 70
+#define NSPINNERS 16
 
 //define scene options
 typedef enum {

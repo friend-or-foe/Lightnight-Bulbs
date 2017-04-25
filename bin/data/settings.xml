@@ -1,0 +1,12 @@
+<group>
+	<Master>
+		<master_brightness>255</master_brightness>
+		<bulb_size>20</bulb_size>
+		<draw_plan>0</draw_plan>
+	</Master>
+	<SCENE_01>
+		<sample_scale>617.347</sample_scale>
+		<X_location>1182</X_location>
+		<Y_location>381</Y_location>
+	</SCENE_01>
+</group>
