@@ -11,12 +11,13 @@ centCirc::~centCirc()
 {
 }
 
-void centCirc::setup(int _x, int _y, float _rad) {
+void centCirc::setup(int _ID, int _x, int _y, float _rad) {
 
 	x = _x;
 	y = _y;
 	rad = _rad;
 
+	ID = _ID;
 }
 
 void centCirc::run() {
@@ -33,6 +34,7 @@ void centCirc::update() {
 
 	rad += 2;
 
+	printf("IM Alive : %i\n", ID);
 	//if(rad > 300)
 
 }

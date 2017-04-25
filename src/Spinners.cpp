@@ -20,7 +20,7 @@ void Spinners::setup(int _ID, ofImage _myImage) {
 	myImage = _myImage;
 
 	myImage.setAnchorPercent(0.5, 0.5);
-	printf("ID + Image: %i\n", myImage);
+
 }
 
 void Spinners::update() {

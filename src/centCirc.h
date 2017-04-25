@@ -9,7 +9,7 @@ public:
 	~centCirc();
 
 	//methods, equivalent to specific functions of your class objects
-	void setup(int _x,int _y, float _rad); //arguments you want to pass must have temp variable names inserted here
+	void setup(int _ID, int _x,int _y, float _rad); //arguments you want to pass must have temp variable names inserted here
 	void run();
 	void addParticle();
 	bool dead();

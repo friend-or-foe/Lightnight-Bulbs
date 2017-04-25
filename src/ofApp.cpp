@@ -36,7 +36,7 @@ void ofApp::setup() {
 	//create centre circle objects
 	for (int i = 0; i<20; i++) {
 		centCirc tempCirc;
-		tempCirc.setup(sc3_xLoc, sc3_yLoc, ofRandom(100));
+		tempCirc.setup(i, sc3_xLoc, sc3_yLoc, ofRandom(100));
 		myCirc.push_back(tempCirc);
 	}
 
@@ -325,7 +325,7 @@ void ofApp::mainScene_3() {
 		myCirc[i].update();
 		myCirc[i].draw();
 	}
-	for (int i = myCirc.size() -1; i >= 1; i--) {
+	for (int i = myCirc.size() -1; i >= 0; i--) {
 		if (myCirc[i].rad > 400) {
 			myCirc.erase(myCirc.begin() + i);
 		}
