@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "bulbClass.h"
 #include "Spinners.h"
+#include "centCirc.h"
 
 #include "ofxDmx.h" //include ofxDM addon
 #include "ofxGui.h" //include GUI addon
@@ -126,6 +127,11 @@ public:
 	ofParameter<int> sc2_freqStep = 10;
 	ofParameter<float> sc2_smoothAmount = 0.90f;
 	
+	//---------------------------------------- scene 03
+	vector <centCirc> myCirc; //vector array for adding/storing particles
+	ofParameter<int> sc3_xLoc = 1163;
+	ofParameter<int> sc3_yLoc = 362;
+
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;
 	ofParameter<float> sc9_fadeSpeed = 0.1;

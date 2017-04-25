@@ -88,6 +88,9 @@
     <ClCompile Include="src\Spinners.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\centCirc.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -264,6 +267,9 @@
       <Filter>addons\ofxMidi\libs\rtmidi</Filter>
     </ClInclude>
     <ClInclude Include="src\Spinners.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\centCirc.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
