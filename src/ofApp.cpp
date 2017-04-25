@@ -34,11 +34,11 @@ void ofApp::setup() {
 	}
 
 	//create centre circle objects
-	for (int i = 0; i<20; i++) {
-		centCirc tempCirc;
-		tempCirc.setup(i, sc3_xLoc, sc3_yLoc, ofRandom(100));
-		myCirc.push_back(tempCirc);
-	}
+	//for (int i = 0; i<20; i++) {
+	//	centCirc tempCirc;
+	//	tempCirc.setup(i, sc3_xLoc, sc3_yLoc, ofRandom(100));
+	//	myCirc.push_back(tempCirc);
+	//}
 
 	//create bulb objects
 	for (int i = 0; i<NBULBS; i++) {
@@ -318,6 +318,21 @@ void ofApp::mainScene_3() {
 
 	vector<float> samples = fftChannelL.getFftNormData();
 
+	if (sc3_countDown == 0) {
+		for (int i = 0; i < samples.size(); i += 8) {
+			if (samples[i] > sc3_gate) {
+				centCirc tempCirc;
+				tempCirc.setup(i, sc3_xLoc, sc3_yLoc, 10, samples[i]*sc3_velocityMultiplier, sc3_lifeSpan);
+				myCirc.push_back(tempCirc);
+			}
+		}
+		sc3_countDown = sc3_count;
+	}
+	else {
+		sc3_countDown--;
+	}
+
+
 	ofNoFill();
 	ofSetColor(255);
 
@@ -327,6 +342,9 @@ void ofApp::mainScene_3() {
 	}
 	for (int i = myCirc.size() -1; i >= 0; i--) {
 		if (myCirc[i].rad > 400) {
+			myCirc.erase(myCirc.begin() + i);
+		}
+		if (myCirc[i].myAge == 0) {
 			myCirc.erase(myCirc.begin() + i);
 		}
 	}
@@ -586,6 +604,18 @@ void ofApp::initGUI() {
 	scene_02.add(sc2_smoothAmount.set("smooth amount", sc2_smoothAmount, 0.5, 0.99));
 
 	gui.add(scene_02);
+
+	//****** SCENE 3 GUI CONTROLS ********//
+	scene_03.setName("SCENE 03");
+	//scene_01.add(sc1_sampleScale.set("sample scale", sc1_sampleScale, 0.0, 1000));
+	scene_03.add(sc3_xLoc.set("X location", sc3_xLoc, 0, ofGetWidth()));
+	scene_03.add(sc3_yLoc.set("Y location", sc3_yLoc, 0, ofGetHeight()));
+	scene_03.add(sc3_gate.set("trigger gate", sc3_gate, 0.05, 1.0));
+	scene_03.add(sc3_count.set("count down", sc3_count, 0, 20));
+	scene_03.add(sc3_velocityMultiplier.set("velocity multiplier", sc3_velocityMultiplier, 0.0, 40.0));
+	scene_03.add(sc3_lifeSpan.set("lifespan", sc3_lifeSpan, 0, 200));
+
+	gui.add(scene_03);
 
 	//****** SCENE 9 GUI CONTROLS ********//
 	scene_09.setName("SCENE 09");

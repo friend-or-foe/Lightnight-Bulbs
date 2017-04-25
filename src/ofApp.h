@@ -82,7 +82,8 @@ public:
 
 	ofParameterGroup master;
 	ofParameterGroup scene_01; //controller group scene 1
-	ofParameterGroup scene_02; //controller group scene 1
+	ofParameterGroup scene_02; //controller group scene 2
+	ofParameterGroup scene_03; //controller group scene 3
 
 	ofParameterGroup scene_09; //controller group scene 9 - glimmer
 	ofParameterGroup scene_00; //controller group scene 0
@@ -131,6 +132,11 @@ public:
 	vector <centCirc> myCirc; //vector array for adding/storing particles
 	ofParameter<int> sc3_xLoc = 1163;
 	ofParameter<int> sc3_yLoc = 362;
+	ofParameter<float> sc3_gate = 0.2;
+	ofParameter<int> sc3_count = 4; //count down gap before next particle can be triggered
+	int sc3_countDown = 4; //keeps track of count
+	ofParameter<float> sc3_velocityMultiplier = 10;
+	ofParameter<int> sc3_lifeSpan = 80; //life of particle
 
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;
