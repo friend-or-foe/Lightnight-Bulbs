@@ -252,11 +252,11 @@ void ofApp::mainScene_2() {
 	for (int i = 0; i < NSPINNERS; i++) {
 		//smoothing for fft values
 		float value = samples[i];// *= 0.993f;
-		fftSmooth[i*10] *= 0.90f;
-		if (fftSmooth[i * 10] < value) {
-			fftSmooth[i * 10] = value;
+		fftSmooth[i*sc2_freqStep] *= sc2_smoothAmount;
+		if (fftSmooth[i * sc2_freqStep] < value) {
+			fftSmooth[i * sc2_freqStep] = value;
 		}
-		ofSetColor(255, abs(fftSmooth[i*10] * sc2_opac));
+		ofSetColor(255, abs(fftSmooth[i*sc2_freqStep] * sc2_opac));
 		//ofImage tempIm = sc2_grad[i];
 		mySpinner[i].update();
 		mySpinner[i].draw();
@@ -496,7 +496,9 @@ void ofApp::initGUI() {
 	scene_02.add(sc2_yLoc.set("Y location", sc2_yLoc, 0, ofGetHeight()));
 	scene_02.add(sc2_rotSpeed.set("rotation speed", sc2_rotSpeed, 0, 10));
 	scene_02.add(sc2_scale.set("scale", sc2_scale, 0, 2.0));
-	scene_02.add(sc2_opac.set("circle opacity", sc2_opac, 0, 2000));
+	scene_02.add(sc2_opac.set("opacity multiplier", sc2_opac, 0, 2000));
+	scene_02.add(sc2_freqStep.set("frequency step", sc2_freqStep, 1, 100));
+	scene_02.add(sc2_smoothAmount.set("smooth amount", sc2_smoothAmount, 0.5, 0.99));
 
 	gui.add(scene_02);
 

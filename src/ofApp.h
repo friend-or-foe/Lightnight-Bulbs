@@ -123,6 +123,8 @@ public:
 	ofParameter<float> sc2_rotSpeed = 4;
 	ofParameter<float> sc2_scale = 1;
 	ofParameter<float> sc2_opac = 255;
+	ofParameter<int> sc2_freqStep = 10;
+	ofParameter<float> sc2_smoothAmount = 0.90f;
 	
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;
@@ -137,9 +139,10 @@ public:
 
 	///--------- SCENE STUFF --------------//
 	Scene myScene = SCENE_1;
-	void mainScene_1();
-	void mainScene_2();
+	void mainScene_1(); //expanding centre circle
+	void mainScene_2(); //spinning gradients
+	void mainScene_3(); //wipe objects
 
-	void mainScene_9();
-	void mainScene_0();
+	void mainScene_9(); //glimmer
+	void mainScene_0(); //test scene Fade all
 };
