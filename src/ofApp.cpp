@@ -79,30 +79,25 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 	// make a copy of the latest message
 	midiMessage = msg;
 
-	// draw the last recieved message contents to the consol
-	MIDItext << "Received: " << ofxMidiMessage::getStatusString(midiMessage.status);
-	MIDItext.str(""); // clear
+	if(midiMessage.pitch != 0){
+	printf("channel:  %i\n", midiMessage.channel);
+	printf("pitch:  %i\n", midiMessage.pitch);
+	}
 
-	MIDItext << "channel: " << midiMessage.channel;
-	MIDItext.str(""); // clear
-
-	MIDItext << "pitch: " << midiMessage.pitch;
-	MIDItext.str(""); // clear
-
-	MIDItext << "velocity: " << midiMessage.velocity;
-	MIDItext.str(""); // clear
-
-	MIDItext << "control: " << midiMessage.control;
-	MIDItext.str(""); // clear
-
-	MIDItext << "delta: " << midiMessage.deltatime;
-	MIDItext.str(""); // clear
-
+	
 	//midiControl = midiMessage.control;
 
-	/*
+	
 	//Faders on microKontrol are control numbers 10-17
+	
+
 	if (midiMessage.status == MIDI_CONTROL_CHANGE) {
+		if (midiMessage.control != 5) {
+		printf("channel:  %i\n", midiMessage.channel);
+		printf("controller num:  %i\n", midiMessage.control);
+		printf("value:  %i\n", midiMessage.value);
+	}
+		/*
 		midiMessage.value = midiMessage.value * 2;
 
 		switch (midiControl) {
@@ -116,8 +111,9 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 			cSlider3 = midiMessage.value;
 			break;
 		}
+		*/
 	}
-	*/
+	
 }
 
 
@@ -631,21 +627,26 @@ void ofApp::initMIDI() {
 	midiIn.listPorts(); // via instance
 						//ofxMidiIn::listPorts(); // via static as well
 						// open port by number (you may need to change this)
-	midiIn.openPort(1);
+	midiInMe.listPorts();
+
+	midiInMe.openPort(1);
+	midiIn.openPort(0);
 	//midiIn.openPort("IAC Pure Data In");	// by name
 	//midiIn.openVirtualPort("ofxMidiIn Input"); // open a virtual port
 
 	// don't ignore sysex, timing, & active sense messages,
 	// these are ignored by default
 	midiIn.ignoreTypes(false, true, true);
+	midiInMe.ignoreTypes(false, true, true);
 
 	// add ofApp as a listener
 	midiIn.addListener(this);
+	midiInMe.addListener(this);
 
 	//midiIn.getPort();
 
 	// print received messages to the console
-	midiIn.setVerbose(true);
+	//midiIn.setVerbose(true);
 
 }
 //-------------------------------------------------------------- AUDIO
@@ -774,4 +775,6 @@ void ofApp::exit() {
 	// clean up
 	midiIn.closePort();
 	midiIn.removeListener(this);
+	midiInMe.closePort();
+	midiInMe.removeListener(this);
 }

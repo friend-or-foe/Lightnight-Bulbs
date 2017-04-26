@@ -54,7 +54,8 @@ public:
 	///--------- MIDI STUFF --------------//
 	void initMIDI();
 	void newMidiMessage(ofxMidiMessage& eventArgs);
-	ofxMidiIn midiIn;
+	ofxMidiIn midiIn; //Adams MIDI in (sending Channel 2 computer, channel 3 drums)
+	ofxMidiIn midiInMe; //Korg Keyboard in (sending on Channel 1)
 	ofxMidiMessage midiMessage;
 	stringstream MIDItext;
 
