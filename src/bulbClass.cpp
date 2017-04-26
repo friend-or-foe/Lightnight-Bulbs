@@ -92,6 +92,28 @@ void Bulb::draw_sc1(int _tmpCol) {
 
 }
 
+void Bulb::draw_sc4() {
+
+	//switch on fill and set colour to show brightness
+	if (dmxLightVal > 0) {
+		dmxLightVal--;// (_tmpCol - dmxLightVal) *_fadeSpeed;
+	}
+
+	//dmxLightVal = _tmpCol; // colorGet[0];
+	ofFill();
+	ofSetColor(dmxLightVal, 0, 0);
+	ofDrawCircle(x, y, dim);
+
+	//draw outline and text
+	ofNoFill();
+	ofSetColor(color);
+	ofSetLineWidth(1);
+	ofDrawCircle(x, y, dim);
+
+	ofDrawBitmapString(dmxID, x + txtOffsetX, y + txtOffsetY);
+
+
+}
 void Bulb::draw_sc9(int _tmpCol, float _fadeSpeed) {
 
 	//switch on fill and set colour to show brightness

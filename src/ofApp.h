@@ -88,6 +88,7 @@ public:
 	ofParameterGroup scene_01; //controller group scene 1
 	ofParameterGroup scene_02; //controller group scene 2
 	ofParameterGroup scene_03; //controller group scene 3
+	ofParameterGroup scene_04; //controller group scene 3
 
 	ofParameterGroup scene_09; //controller group scene 9 - glimmer
 	ofParameterGroup scene_00; //controller group scene 0
@@ -158,6 +159,7 @@ public:
 	void mainScene_1(); //expanding centre circle
 	void mainScene_2(); //spinning gradients
 	void mainScene_3(); //wipe objects
+	void mainScene_4(); //MIDI Test
 
 	void mainScene_9(); //glimmer
 	void mainScene_0(); //test scene Fade all

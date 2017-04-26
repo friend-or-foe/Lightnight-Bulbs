@@ -84,7 +84,23 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 	printf("pitch:  %i\n", midiMessage.pitch);
 	}
 
-	
+	if (midiMessage.channel == 1) {
+		float myBright = midiMessage.velocity * 2;
+
+		float adjustedBrightness = 0;
+		int thisBulb = midiMessage.pitch;
+
+		//float mainBright = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
+		//float fadeSpeed = sc9_fadeSpeed;
+
+
+
+
+		adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+		myBulb[thisBulb].myTrigger = true;
+		myBulb[thisBulb].dmxLightVal = adjustedBrightness;
+	}
+
 	//midiControl = midiMessage.control;
 
 	
@@ -159,7 +175,10 @@ void ofApp::draw() {
 	case SCENE_3:
 		mainScene_3();
 			break;
+	case SCENE_4:
+		mainScene_4();
 
+		break;
 	case SCENE_9:
 		mainScene_9();
 		break;
@@ -385,6 +404,49 @@ void ofApp::mainScene_3() {
 
 }
 
+//-------------------------------------------------------------- SCENE 04
+void ofApp::mainScene_4() {
+
+
+	
+
+	
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	}
+	else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight);
+	}
+
+	for (int i = 0; i < NBULBS; i++) {
+		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < planWidth
+			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < planHeight) {
+			tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
+																							  ///uncomment to check colour being sent to bulb object
+																							  ///printf("myBulb - colour: %i\n", tmpCol.r);
+		}
+		else {
+			tmpCol = (0, 0, 0);
+		}
+	}
+		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
+		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+
+		//float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+		
+	for(int i= 0; i < NBULBS; i++){
+		myBulb[i].draw_sc4(); //call draw sending colour value to object.
+
+		sendDMXVals(i);
+
+	}
+
+
+}
+
 //-------------------------------------------------------------- SCENE 9 - Glimmer / Noise
 void ofApp::mainScene_9() {
 
@@ -403,31 +465,31 @@ void ofApp::mainScene_9() {
 
 	float myBright;
 	float adjustedBrightness = 0;
-	
+
 	float mainBright = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
 	//float fadeSpeed = sc9_fadeSpeed;
 
 	for (int i = 0; i < NBULBS; i++) {
 		int randChance = ofRandom(1000);
-		if (randChance < sc9_changeChance){
-			
-				myBright = sc9_allBrightness - (ofRandom(sc9_noiseScale*sc9_allBrightness));// (ofNoise(ofRandom(sc9_noiseVal))*sc9_noiseScale);
-			
-		//printf("myBulb - colour: %i\n", myBright);
-		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
-		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+		if (randChance < sc9_changeChance) {
 
-				adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
-				myBulb[i].myTrigger = true;
-				myBulb[i].dmxLightVal = adjustedBrightness;
+			myBright = sc9_allBrightness - (ofRandom(sc9_noiseScale*sc9_allBrightness));// (ofNoise(ofRandom(sc9_noiseVal))*sc9_noiseScale);
+
+																						//printf("myBulb - colour: %i\n", myBright);
+																						/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
+																						THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+
+			adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+			myBulb[i].myTrigger = true;
+			myBulb[i].dmxLightVal = adjustedBrightness;
 		}
 
-			myBulb[i].draw_sc9(mainBright, sc9_fadeSpeed); //call draw sending colour value to object.
+		myBulb[i].draw_sc9(mainBright, sc9_fadeSpeed); //call draw sending colour value to object.
 
-			sendDMXVals(i);
-	
+		sendDMXVals(i);
+
 	}
-	
+
 }
 
 //-------------------------------------------------------------- SCENE 0 - test/warmer scene
@@ -473,6 +535,9 @@ void ofApp::keyPressed(int key) {
 		break;
 	case '3':
 		myScene = SCENE_3;
+		break;
+	case '4':
+		myScene = SCENE_4;
 		break;
 
 	case '9':
