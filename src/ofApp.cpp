@@ -340,34 +340,16 @@ void ofApp::mainScene_3() {
 		myCirc[i].update();
 		myCirc[i].draw();
 	}
+	//if (myCirc.size() > 0){
 	for (int i = myCirc.size() -1; i >= 0; i--) {
-		if (myCirc[i].rad > 400) {
-			myCirc.erase(myCirc.begin() + i);
-		}
+	//	if (myCirc[i].rad > 400) {
+	//		myCirc.erase(myCirc.begin() + i);
+	//	}
 		if (myCirc[i].myAge == 0) {
 			myCirc.erase(myCirc.begin() + i);
 		}
 	}
-	//ofScale(sc2_scale, sc2_scale);
-	//ofRotate(sc2_baseRot);
-	/*
-	for (int i = 0; i < NSPINNERS; i++) {
-		//smoothing for fft values
-		float value = samples[i];// *= 0.993f;
-		fftSmooth[i*sc2_freqStep] *= sc2_smoothAmount;
-		if (fftSmooth[i * sc2_freqStep] < value) {
-			fftSmooth[i * sc2_freqStep] = value;
-		}
-		ofSetColor(255, abs(fftSmooth[i*sc2_freqStep] * sc2_opac));
-		//ofImage tempIm = sc2_grad[i];
-		mySpinner[i].update();
-		mySpinner[i].draw();
-	}
-
-	ofPopMatrix();
-
-	sc2_baseRot += sc2_rotSpeed;
-	*/
+	
 
 	//grab screenshot  before bulbs are drawn
 	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
@@ -533,9 +515,14 @@ void ofApp::mousePressed(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button) {
-	for (int i = 0; i<NBULBS; i++) {
+	for (int i = 0; i < NBULBS; i++) {
 		myBulb[i].mouseReleased();
 	}
+
+	if (myScene = SCENE_3) {
+	sc3_xLoc = ofGetMouseX();
+	sc3_yLoc = ofGetMouseY();
+}
 }
 
 //--------------------------------------------------------------

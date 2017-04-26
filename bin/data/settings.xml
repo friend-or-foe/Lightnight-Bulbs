@@ -1,12 +1,40 @@
 <group>
 	<Master>
 		<master_brightness>255</master_brightness>
-		<bulb_size>20</bulb_size>
+		<bulb_size>12.3143</bulb_size>
 		<draw_plan>0</draw_plan>
 	</Master>
 	<SCENE_01>
-		<sample_scale>617.347</sample_scale>
-		<X_location>1182</X_location>
-		<Y_location>381</Y_location>
+		<sample_scale>219.388</sample_scale>
+		<X_location>987</X_location>
+		<Y_location>284</Y_location>
+	<circle_opacity>20</circle_opacity>
 	</SCENE_01>
+<group/>
+	<SCENE_02>
+		<X_location>1143</X_location>
+		<Y_location>306</Y_location>
+		<rotation_speed>0.510204</rotation_speed>
+		<scale>1.52041</scale>
+		<opacity_multiplier>1030.61</opacity_multiplier>
+		<frequency_step>10</frequency_step>
+		<smooth_amount>0.9</smooth_amount>
+	</SCENE_02>
+	<SCENE_03>
+		<X_location>948</X_location>
+		<Y_location>300</Y_location>
+		<trigger_gate>0.626786</trigger_gate>
+		<count_down>4</count_down>
+		<velocity_multiplier>1.42857</velocity_multiplier>
+		<lifespan>200</lifespan>
+	</SCENE_03>
+	<SCENE_09>
+		<bulb_brightness>72</bulb_brightness>
+		<fade_speed>0.0612245</fade_speed>
+		<noise_scale>0.857143</noise_scale>
+		<chance_of_change>15.3061</chance_of_change>
+	</SCENE_09>
+	<SCENE_00>
+		<bulb_brightness>70</bulb_brightness>
+	</SCENE_00>
 </group>

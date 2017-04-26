@@ -20,6 +20,9 @@ typedef enum {
 	SCENE_1, // these can have any name you want, eg SCENE_BREATH etc  
 	SCENE_2,
 	SCENE_3,
+	SCENE_4,
+	SCENE_5,
+	SCENE_6,
 	SCENE_9,
 	SCENE_0,
 } Scene;
