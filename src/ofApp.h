@@ -140,8 +140,9 @@ public:
 	ofParameter<float> sc3_gate = 0.2;
 	ofParameter<int> sc3_count = 4; //count down gap before next particle can be triggered
 	int sc3_countDown = 4; //keeps track of count
-	ofParameter<float> sc3_velocityMultiplier = 10;
+	ofParameter<float> sc3_velocityMultiplier = 5;
 	ofParameter<int> sc3_lifeSpan = 80; //life of particle
+	ofParameter<float> sc3_range = 64.0; //range that is affected by line
 
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;

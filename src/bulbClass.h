@@ -26,6 +26,7 @@ public: // place public functions or variables declared here
 
 	//scene draw functions
 	void draw_sc1(int _tmpCol); //scene 1
+	void draw_sc3(float _tmpDist); //scene 1
 	void draw_sc4(); //scene 4
 
 	void draw_sc9(int _tmpCol, float _fadeSpeed); //Scene 0

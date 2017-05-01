@@ -380,22 +380,28 @@ void ofApp::mainScene_3() {
 	}
 
 	for (int i = 0; i < NBULBS; i++) {
-		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < planWidth
-			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < planHeight) {
-			tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
-																							  ///uncomment to check colour being sent to bulb object
-																							  ///printf("myBulb - colour: %i\n", tmpCol.r);
-		}
-		else {
-			tmpCol = (0, 0, 0);
+		
+		float tempDist = 1000; //store diameter of circle
+		float measure = ofDist(sc3_xLoc, sc3_yLoc, myBulb[i].x, myBulb[i].y); //get distance of bulb from centre to work out if line is intersecting
+		float tempBright = 0; //set brightness to 0 initialy. only updated if it is within range
+
+		for (int i = 0; i < myCirc.size(); i++) {
+			tempDist = (myCirc[i].rad)*1.25; //not sure why this has to be multiplied but seems to be working
+			float gap = abs(tempDist - measure);
+			if (gap <= sc3_range) {
+				tempBright+= 255 - (gap * (255.0/ sc3_range));
+			}
+
 		}
 
+		
+	
 		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
 		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
 
-		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+		float adjustedBrightness = ofMap(tempBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
 
-		myBulb[i].draw_sc1(adjustedBrightness); //call draw sending colour value to object.
+		myBulb[i].draw_sc3(adjustedBrightness); //call draw sending colour value to object.
 
 		sendDMXVals(i);
 
@@ -662,6 +668,7 @@ void ofApp::initGUI() {
 	scene_03.add(sc3_count.set("count down", sc3_count, 0, 20));
 	scene_03.add(sc3_velocityMultiplier.set("velocity multiplier", sc3_velocityMultiplier, 0.0, 40.0));
 	scene_03.add(sc3_lifeSpan.set("lifespan", sc3_lifeSpan, 0, 200));
+	scene_03.add(sc3_range.set("range", sc3_range, 8, 240));
 
 	gui.add(scene_03);
 
