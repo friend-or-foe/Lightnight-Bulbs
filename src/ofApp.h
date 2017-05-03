@@ -4,6 +4,7 @@
 #include "bulbClass.h"
 #include "Spinners.h"
 #include "centCirc.h"
+#include "vertBars.h"
 
 #include "ofxDmx.h" //include ofxDM addon
 #include "ofxGui.h" //include GUI addon
@@ -14,6 +15,7 @@
 
 #define NBULBS 70
 #define NSPINNERS 16
+#define NBARS 32
 
 //define scene options
 typedef enum {
@@ -62,6 +64,7 @@ public:
 	///--------- GENERAL PROGRAM STUFF --------------//
 	Bulb myBulb[NBULBS]; //create bulb array
 	Spinners mySpinner[NSPINNERS];
+	Bar myBars[NBARS];
 
 	ofImage tmpImage; //image for screengrab to be saved to. The bulbs pick their colour from this
 	ofColor tmpCol; //stores the colour value to pass to bulbs
@@ -89,6 +92,7 @@ public:
 	ofParameterGroup scene_02; //controller group scene 2
 	ofParameterGroup scene_03; //controller group scene 3
 	ofParameterGroup scene_04; //controller group scene 3
+	ofParameterGroup scene_05; //controller group scene 3
 
 	ofParameterGroup scene_09; //controller group scene 9 - glimmer
 	ofParameterGroup scene_00; //controller group scene 0
@@ -144,10 +148,19 @@ public:
 	ofParameter<int> sc3_lifeSpan = 80; //life of particle
 	ofParameter<float> sc3_range = 64.0; //range that is affected by line
 
+
+	//---------------------------------------- scene 05
+	
+	ofParameter<int> sc5_xLoc = 600;
+	ofParameter<int> sc5_yLoc = 362;
+	ofParameter<int> sc5_numBars = 11;
+	ofParameter<int> sc5_width = 1200;
+	ofParameter<float> sc5_fade = 10;
+
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;
-	ofParameter<float> sc9_fadeSpeed = 0.1;
-	ofParameter<float> sc9_noiseScale = 0;
+	ofParameter<float> sc9_fineFadeSpeed = 0.01;
+	ofParameter<float> sc9_fadeSpeed = 0.0;
 	ofParameter<float> sc9_changeChance = 0;
 	int sc9_flashCount = 0;
 
@@ -161,6 +174,7 @@ public:
 	void mainScene_2(); //spinning gradients
 	void mainScene_3(); //wipe objects
 	void mainScene_4(); //MIDI Test
+	void mainScene_5(); //MIDI Test
 
 	void mainScene_9(); //glimmer
 	void mainScene_0(); //test scene Fade all

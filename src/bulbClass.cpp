@@ -138,13 +138,16 @@ void Bulb::draw_sc4() {
 
 }
 
-void Bulb::draw_sc9(int _tmpCol, float _fadeSpeed) {
+void Bulb::draw_sc9(int _tmpCol, float _fineFade, float _fadeSpeed) {
 
 	//switch on fill and set colour to show brightness
-	if (dmxLightVal != _tmpCol) {
-		dmxLightVal += (_tmpCol - dmxLightVal) *_fadeSpeed;
-	}
+	//if (dmxLightVal != _tmpCol) {
+	//	dmxLightVal += (_tmpCol - dmxLightVal) *_fadeSpeed;
+	//}
 
+	if (dmxLightVal > 0) {
+		dmxLightVal -= _fineFade +_fadeSpeed;
+	}
 	//dmxLightVal = _tmpCol; // colorGet[0];
 	ofFill();
 	ofSetColor(dmxLightVal, 0, 0);

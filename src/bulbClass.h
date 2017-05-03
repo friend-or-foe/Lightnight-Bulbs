@@ -29,7 +29,7 @@ public: // place public functions or variables declared here
 	void draw_sc3(float _tmpDist); //scene 1
 	void draw_sc4(); //scene 4
 
-	void draw_sc9(int _tmpCol, float _fadeSpeed); //Scene 0
+	void draw_sc9(int _tmpCol, float _fineFade, float _fadeSpeed); //Scene 0
 	void draw_sc0(int _tmpCol); //Scene 0 is the test scene - all bulbs controlled by a master fader.
 
 

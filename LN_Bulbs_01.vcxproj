@@ -221,6 +221,7 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIn
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Spinners.cpp" />
+    <ClCompile Include="src\vertBars.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\addons\ofxDmx\src\ofxDmx.h" />
@@ -263,6 +264,7 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIn
     <ClInclude Include="src\centCirc.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Spinners.h" />
+    <ClInclude Include="src\vertBars.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

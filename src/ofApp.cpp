@@ -33,12 +33,10 @@ void ofApp::setup() {
 		mySpinner[i].setup(i, tempImage);
 	}
 
-	//create centre circle objects
-	//for (int i = 0; i<20; i++) {
-	//	centCirc tempCirc;
-	//	tempCirc.setup(i, sc3_xLoc, sc3_yLoc, ofRandom(100));
-	//	myCirc.push_back(tempCirc);
-	//}
+	//create bar objects - Scene 5
+	for (int i = 0; i < NBARS; i++) {
+		myBars[i].setup(i, sc5_xLoc, sc5_yLoc);
+	}
 
 	//create bulb objects
 	for (int i = 0; i<NBULBS; i++) {
@@ -84,23 +82,36 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 	printf("pitch:  %i\n", midiMessage.pitch);
 	}
 
-	if (midiMessage.channel == 1) {
-		float myBright = midiMessage.velocity * 2;
-
-		float adjustedBrightness = 0;
-		int thisBulb = midiMessage.pitch;
-
-		//float mainBright = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
-		//float fadeSpeed = sc9_fadeSpeed;
-
-
-
-
-		adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
-		myBulb[thisBulb].myTrigger = true;
-		myBulb[thisBulb].dmxLightVal = adjustedBrightness;
+	//---------------------------------------------- Scene 5 MIDI
+	if (myScene == SCENE_5) {
+		if(midiMessage.velocity != 0){
+		int pitchBase = 23;
+		int midiKey = midiMessage.pitch;
+		if ((midiKey >= pitchBase) && (midiKey <= (pitchBase + sc5_numBars))) {
+			float adjustedBrightness = ofMap(255, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+			myBars[midiKey - pitchBase].bright = adjustedBrightness;
+		}
+		}	
 	}
 
+	if (myScene == SCENE_4) {
+		if (midiMessage.channel == 1) {
+			float myBright = midiMessage.velocity * 2;
+
+			float adjustedBrightness = 0;
+			int thisBulb = midiMessage.pitch;
+
+			//float mainBright = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
+			//float fadeSpeed = sc9_fadeSpeed;
+
+
+
+
+			adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+			myBulb[thisBulb].myTrigger = true;
+			myBulb[thisBulb].dmxLightVal = adjustedBrightness;
+		}
+	}
 	//midiControl = midiMessage.control;
 
 	
@@ -177,8 +188,10 @@ void ofApp::draw() {
 			break;
 	case SCENE_4:
 		mainScene_4();
-
+	case SCENE_5:
+		mainScene_5();
 		break;
+
 	case SCENE_9:
 		mainScene_9();
 		break;
@@ -453,6 +466,60 @@ void ofApp::mainScene_4() {
 
 }
 
+//-------------------------------------------------------------- SCENE 05
+void ofApp::mainScene_5() {
+
+	float barW = sc5_width / sc5_numBars;
+
+
+	for (int i = 0; i < sc5_numBars; i++) {
+		float myLoc = sc5_xLoc + (i*barW);
+		myBars[i].update(myLoc, barW);
+		myBars[i].draw(sc5_fade);
+	}
+
+	//grab screenshot  before bulbs are drawn
+	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
+
+	//grab screenshot  before bulbs are drawn
+	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
+
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	}
+	else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight);
+	}
+
+	for (int i = 0; i < NBULBS; i++) {
+		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < planWidth
+			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < planHeight) {
+			tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
+																							  ///uncomment to check colour being sent to bulb object
+																							  ///printf("myBulb - colour: %i\n", tmpCol.r);
+		}
+		else {
+			tmpCol = (0, 0, 0);
+		}
+
+		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
+		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+
+		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+
+		myBulb[i].draw_sc1(adjustedBrightness); //call draw sending colour value to object.
+
+		sendDMXVals(i);
+
+	}
+
+
+}
+
+
 //-------------------------------------------------------------- SCENE 9 - Glimmer / Noise
 void ofApp::mainScene_9() {
 
@@ -476,10 +543,10 @@ void ofApp::mainScene_9() {
 	//float fadeSpeed = sc9_fadeSpeed;
 
 	for (int i = 0; i < NBULBS; i++) {
-		int randChance = ofRandom(1000);
+		int randChance = ofRandom(3000);
 		if (randChance < sc9_changeChance) {
 
-			myBright = sc9_allBrightness - (ofRandom(sc9_noiseScale*sc9_allBrightness));// (ofNoise(ofRandom(sc9_noiseVal))*sc9_noiseScale);
+			myBright = sc9_allBrightness;// -(ofRandom(sc9_noiseScale*sc9_allBrightness));// (ofNoise(ofRandom(sc9_noiseVal))*sc9_noiseScale);
 
 																						//printf("myBulb - colour: %i\n", myBright);
 																						/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
@@ -490,7 +557,7 @@ void ofApp::mainScene_9() {
 			myBulb[i].dmxLightVal = adjustedBrightness;
 		}
 
-		myBulb[i].draw_sc9(mainBright, sc9_fadeSpeed); //call draw sending colour value to object.
+		myBulb[i].draw_sc9(mainBright, sc9_fineFadeSpeed, sc9_fadeSpeed); //call draw sending colour value to object.
 
 		sendDMXVals(i);
 
@@ -545,6 +612,9 @@ void ofApp::keyPressed(int key) {
 	case '4':
 		myScene = SCENE_4;
 		break;
+	case '5':
+		myScene = SCENE_5;
+		break;
 
 	case '9':
 		myScene = SCENE_9;
@@ -554,6 +624,38 @@ void ofApp::keyPressed(int key) {
 		break;
 	}
 
+
+	//printf("key: %i\n", key);
+	if (myScene == SCENE_5) {
+		
+		switch (key)
+		{
+		case 'q':
+			
+
+			myBars[0].bright = 255;
+			break;
+		case 'w':
+			myBars[1].bright = 255;
+			break;
+		case 'e':
+			myBars[2].bright = 255;
+			break;
+		case 'r':
+			myBars[3].bright = 255;
+			break;
+		case 't':
+			myBars[4].bright = 255;
+			break;
+
+		case 'y':
+			myBars[5].bright = 255;
+			break;
+		case 'u':
+			myBars[6].bright = 255;
+			break;
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -626,7 +728,9 @@ void ofApp::initGUI() {
 	loadBulbLocations.addListener(this, &ofApp::loadButtonPressed);
 	saveBulbLocations.addListener(this, &ofApp::saveButtonPressed);
 
+	gui.setDefaultWidth(400);
 	gui.setup();
+	
 
 	master.setName("Master");
 	master.add(masterBrightness.set("master brightness", masterBrightness, 0.0, 255));
@@ -672,12 +776,26 @@ void ofApp::initGUI() {
 
 	gui.add(scene_03);
 
+	//****** SCENE 4 GUI CONTROLS ********//
+	scene_04.setName("SCENE 04");
+	gui.add(scene_04);
+
+	//****** SCENE 5 GUI CONTROLS ********//
+	scene_05.setName("SCENE 05");
+	scene_05.add(sc5_xLoc.set("X location", sc5_xLoc, 0, ofGetWidth()));
+	scene_05.add(sc5_yLoc.set("Y location", sc5_yLoc, 0, ofGetHeight()));
+	scene_05.add(sc5_width.set("span of bars", sc5_width, 500, 1400));
+	scene_05.add(sc5_numBars.set("number of bars", sc5_numBars, 0, NBARS));
+	scene_05.add(sc5_fade.set("fade speed", sc5_fade, 1, 20));
+	gui.add(scene_05);
+
+
 	//****** SCENE 9 GUI CONTROLS ********//
 	scene_09.setName("SCENE 09");
 	scene_09.add(sc9_allBrightness.set("bulb brightness", sc9_allBrightness, 0, 255));
-	scene_09.add(sc9_fadeSpeed.set("fade speed", sc9_fadeSpeed, 0.0, 1.0));
-	scene_09.add(sc9_noiseScale.set("noise scale", sc9_noiseScale, 0.0, 1));
-	scene_09.add(sc9_changeChance.set("chance of change", sc9_changeChance, 0.0, 1000));
+	scene_09.add(sc9_fineFadeSpeed.set("Fine Fade Speed", sc9_fineFadeSpeed, 0.0, 1));
+	scene_09.add(sc9_fadeSpeed.set("fade speed", sc9_fadeSpeed, 0.0, 3));
+	scene_09.add(sc9_changeChance.set("chance of change", sc9_changeChance, 0.0, 300));
 
 	gui.add(scene_09);
 
