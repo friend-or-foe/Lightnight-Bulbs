@@ -113,10 +113,12 @@ public:
 	///--------- FFT STUFF --------------//
 	void initAudio();
 	void drawSamples_scene1(vector<float> samples);
+	void drawSamples_scene5(vector<float> samples);
 	void drawSamples_scene6(vector<float> samples);
 
 	void audioIn(float * input, int bufferSize, int nChannels);
 	void drawFFT_scene1();
+	void drawFFT_scene5();
 	void drawFFT_scene6();
 
 	ofSoundStream soundStream;
@@ -169,6 +171,14 @@ public:
 	ofParameter<int> sc5_width = 1200;
 	ofParameter<float> sc5_fade = 10;
 
+	ofParameter<bool> sc5_drawFFT = false;
+	ofParameter<int> sc5_FFTxLoc = 1065;
+	ofParameter<int> sc5_FFTyLoc = 50;
+	ofParameter<int> sc5_opac = 30;
+	ofParameter<float> sc5_sampleScale = 600;
+	ofParameter<int> sc5_startFreq = 10;
+	ofParameter<int> sc5_freqStep = 10;
+	ofParameter<float> sc5_smoothAmount = 0.98f;
 	//---------------------------------------- scene 06
 	//GUI controllable
 	ofParameter<float> sc6_sampleScale = 200;

@@ -1,6 +1,6 @@
 <group>
 	<Master>
-		<master_brightness>235.485</master_brightness>
+		<master_brightness>255</master_brightness>
 		<bulb_size>20</bulb_size>
 		<draw_plan>0</draw_plan>
 	</Master>
@@ -9,33 +9,69 @@
 		<X_location>1163</X_location>
 		<Y_location>362</Y_location>
 	<circle_opacity>20</circle_opacity>
+	<star_fequency>0</star_fequency>
+		<frequency_step>10</frequency_step>
+		<smooth_amount>0.98</smooth_amount>
 	</SCENE_01>
 <group/>
 	<SCENE_02>
-		<X_location>1143</X_location>
-		<Y_location>284</Y_location>
-		<rotation_speed>2.65306</rotation_speed>
-		<scale>1.52041</scale>
+		<X_location>1163</X_location>
+		<Y_location>362</Y_location>
+		<rotation_speed>4</rotation_speed>
+		<scale>1</scale>
 		<opacity_multiplier>255</opacity_multiplier>
 		<frequency_step>10</frequency_step>
 		<smooth_amount>0.9</smooth_amount>
 	</SCENE_02>
 	<SCENE_03>
-		<X_location>997</X_location>
-		<Y_location>311</Y_location>
-		<trigger_gate>0.670408</trigger_gate>
-		<count_down>14</count_down>
-		<velocity_multiplier>3.26531</velocity_multiplier>
-		<lifespan>130</lifespan>
-	<range>49.4286</range>
+		<X_location>1163</X_location>
+		<Y_location>362</Y_location>
+		<trigger_gate>0.2</trigger_gate>
+		<count_down>4</count_down>
+		<velocity_multiplier>5</velocity_multiplier>
+		<lifespan>80</lifespan>
+	<range>64</range>
 	</SCENE_03>
 	<SCENE_09>
 		<bulb_brightness>0</bulb_brightness>
-		<fade_speed>0.1</fade_speed>
+		<fade_speed>0</fade_speed>
 		<noise_scale>0</noise_scale>
 		<chance_of_change>0</chance_of_change>
+	<Fine_Fade_Speed>0.01</Fine_Fade_Speed>
 	</SCENE_09>
 	<SCENE_00>
 		<bulb_brightness>0</bulb_brightness>
 	</SCENE_00>
+<SCENE_04/>
+	<SCENE_05>
+		<X_location>606</X_location>
+		<Y_location>362</Y_location>
+		<span_of_bars>1094</span_of_bars>
+		<number_of_bars>19</number_of_bars>
+		<fade_speed>10</fade_speed>
+		<draw_FFT>1</draw_FFT>
+		<FFT_X_location>1065</FFT_X_location>
+		<FFT_Y_location>50</FFT_Y_location>
+		<circle_opacity>13</circle_opacity>
+		<sample_scale>244.898</sample_scale>
+		<start_fequency>17</start_fequency>
+		<frequency_step>4</frequency_step>
+		<smooth_amount>0.98</smooth_amount>
+	</SCENE_05>
+	<SCENE_06>
+		<sample_scale>200</sample_scale>
+		<X_location>1163</X_location>
+		<Y_location>362</Y_location>
+		<circle_opacity>20</circle_opacity>
+		<frequency_step>10</frequency_step>
+		<smooth_amount>0.98</smooth_amount>
+	</SCENE_06>
+	<SCENE_07>
+		<X_location>1163</X_location>
+		<Y_location>362</Y_location>
+		<X_hole_size>100</X_hole_size>
+		<Y_hole_size>50</Y_hole_size>
+		<X_Spread>60</X_Spread>
+		<Y_Spread>30</Y_Spread>
+	</SCENE_07>
 </group>

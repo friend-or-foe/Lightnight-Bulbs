@@ -90,14 +90,14 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 	//---------------------------------------------- Scene 5 MIDI
 	if (myScene == SCENE_5) {
 		if (midiMessage.velocity != 0) {
-			if (midiMessage.channel == 1) {
+			//if (midiMessage.channel == 1) {
 			int pitchBase = 36;
 			int midiKey = midiMessage.pitch;
 				if ((midiKey >= pitchBase) && (midiKey <= (pitchBase + sc5_numBars))) {
 					float adjustedBrightness = ofMap(255, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
 					myBars[midiKey - pitchBase].bright = adjustedBrightness;
 				}
-			}
+			//}
 			
 		}	
 	}
@@ -484,6 +484,12 @@ void ofApp::mainScene_4() {
 //-------------------------------------------------------------- SCENE 05
 void ofApp::mainScene_5() {
 
+	if (sc5_drawFFT) {
+	///----------- DRAW FFT SHAPES ---------------//
+	drawFFT_scene5();
+	}
+
+	////------------------
 	float barW = sc5_width / sc5_numBars;
 
 
@@ -903,6 +909,15 @@ void ofApp::initGUI() {
 	scene_05.add(sc5_width.set("span of bars", sc5_width, 500, 1400));
 	scene_05.add(sc5_numBars.set("number of bars", sc5_numBars, 0, NBARS));
 	scene_05.add(sc5_fade.set("fade speed", sc5_fade, 1, 20));
+
+	scene_05.add(sc5_drawFFT.set("draw FFT", false));
+	scene_05.add(sc5_FFTxLoc.set("FFT X location", sc5_FFTxLoc, 0, ofGetWidth()));
+	scene_05.add(sc5_FFTyLoc.set("FFT Y location", sc5_FFTyLoc, 0, ofGetHeight()));
+	scene_05.add(sc5_opac.set("circle opacity", sc5_opac, 0, 255));
+	scene_05.add(sc5_sampleScale.set("sample scale", sc5_sampleScale, 0.0, 1000));
+	scene_05.add(sc5_startFreq.set("start fequency", sc5_startFreq, 0, 100));
+	scene_05.add(sc5_freqStep.set("frequency step", sc5_freqStep, 1, 100));
+	scene_05.add(sc5_smoothAmount.set("smooth amount", sc5_smoothAmount, 0.5, 0.99));
 	gui.add(scene_05);
 
 	//****** SCENE 6 GUI CONTROLS ********//
@@ -1044,6 +1059,53 @@ void ofApp::drawSamples_scene1(vector<float> samples) {
 	}
 
 }
+
+//-------------------------------------------------------------- SCENE 6
+void ofApp::drawFFT_scene5() {
+
+	ofSetColor(255, sc5_opac);
+	ofPushMatrix();
+	ofTranslate(sc5_FFTxLoc, sc5_FFTyLoc);
+	drawSamples_scene5(fftChannelL.getFftNormData());
+	ofPopMatrix();
+
+	//uncomment to draw right channel
+	/*
+	ofPushMatrix();
+	ofTranslate(0, ofGetHeight() * 0.75);
+	drawSamples(fftChannelR.getFftNormData());
+	ofPopMatrix();
+	*/
+}
+
+void ofApp::drawSamples_scene5(vector<float> samples) {
+
+	int sampleWidth = ofGetWidth() / samples.size();
+	int sampleHeight = ofGetHeight() / 2;
+	int numOfSamples = samples.size();
+
+	for (int i = sc5_startFreq; i<numOfSamples; i += sc5_freqStep) {
+		int x = 0; // ofMap(i, 0, numOfSamples - 1, 0, ofGetWidth() - sampleWidth);
+		int y = 0;
+
+		//smoothing for fft values
+		float value = samples[i] * sc5_sampleScale;// *= 0.993f;
+		fftSmooth[i] *= sc5_smoothAmount;
+		if (fftSmooth[i] < value) {
+			fftSmooth[i] = value;
+		}
+
+		int w = abs(-fftSmooth[i]);
+		//int h = -samples[i] * sampleHeight;
+
+		//ofDrawEllipse(x, y, w, w);
+		ofDrawRectangle(0, 0, w, 500);
+		ofDrawRectangle(0, 0, -w, 500);
+	}
+
+}
+
+
 
 //-------------------------------------------------------------- SCENE 6
 void ofApp::drawFFT_scene6() {
