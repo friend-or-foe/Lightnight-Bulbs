@@ -25,6 +25,8 @@ typedef enum {
 	SCENE_4,
 	SCENE_5,
 	SCENE_6,
+	SCENE_7,
+	SCENE_8,
 	SCENE_9,
 	SCENE_0,
 } Scene;
@@ -91,8 +93,9 @@ public:
 	ofParameterGroup scene_01; //controller group scene 1
 	ofParameterGroup scene_02; //controller group scene 2
 	ofParameterGroup scene_03; //controller group scene 3
-	ofParameterGroup scene_04; //controller group scene 3
-	ofParameterGroup scene_05; //controller group scene 3
+	ofParameterGroup scene_04; //controller group scene 4
+	ofParameterGroup scene_05; //controller group scene 5
+	ofParameterGroup scene_06; //controller group scene 5
 
 	ofParameterGroup scene_09; //controller group scene 9 - glimmer
 	ofParameterGroup scene_00; //controller group scene 0
@@ -106,9 +109,11 @@ public:
 	///--------- FFT STUFF --------------//
 	void initAudio();
 	void drawSamples_scene1(vector<float> samples);
+	void drawSamples_scene6(vector<float> samples);
 
 	void audioIn(float * input, int bufferSize, int nChannels);
 	void drawFFT_scene1();
+	void drawFFT_scene6();
 
 	ofSoundStream soundStream;
 	vector<float> samplesChannelL;
@@ -125,6 +130,9 @@ public:
 	ofParameter<int> sc1_xLoc = 1163;
 	ofParameter<int> sc1_yLoc = 362;
 	ofParameter<float> sc1_opac = 20;
+	ofParameter<float> sc1_startFreq = 20;
+	ofParameter<int> sc1_freqStep = 10;
+	ofParameter<float> sc1_smoothAmount = 0.98f;
 
 	//---------------------------------------- scene 02
 	ofImage sc2_grad[8];
@@ -157,6 +165,15 @@ public:
 	ofParameter<int> sc5_width = 1200;
 	ofParameter<float> sc5_fade = 10;
 
+	//---------------------------------------- scene 06
+	//GUI controllable
+	ofParameter<float> sc6_sampleScale = 200;
+	ofParameter<int> sc6_xLoc = 1163;
+	ofParameter<int> sc6_yLoc = 362;
+	ofParameter<float> sc6_opac = 20;
+	ofParameter<int> sc6_freqStep = 10;
+	ofParameter<float> sc6_smoothAmount = 0.98f;
+
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;
 	ofParameter<float> sc9_fineFadeSpeed = 0.01;
@@ -174,7 +191,8 @@ public:
 	void mainScene_2(); //spinning gradients
 	void mainScene_3(); //wipe objects
 	void mainScene_4(); //MIDI Test
-	void mainScene_5(); //MIDI Test
+	void mainScene_5(); //MIDI bars
+	void mainScene_6(); //place frequencies
 
 	void mainScene_9(); //glimmer
 	void mainScene_0(); //test scene Fade all
