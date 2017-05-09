@@ -947,18 +947,18 @@ void ofApp::drawSamples_scene1(vector<float> samples) {
 	int sampleHeight = ofGetHeight() / 2;
 	int numOfSamples = samples.size();
 
-	for (int i = 0; i<numOfSamples; i += 10) {
+	for (int i = sc1_startFreq; i<numOfSamples; i += sc1_freqStep) {
 		int x = 0; // ofMap(i, 0, numOfSamples - 1, 0, ofGetWidth() - sampleWidth);
 		int y = 0;
 
 		//smoothing for fft values
 		float value = samples[i] * sc1_sampleScale;// *= 0.993f;
-		fftSmooth[i] *= 0.98f;
+		fftSmooth[i] *= sc1_smoothAmount;
 		if (fftSmooth[i] < value) {
 			fftSmooth[i] = value;
 		}
 
-		int w = 1 + (-fftSmooth[i]);
+		int w = 1 + abs(-fftSmooth[i]);
 		//int h = -samples[i] * sampleHeight;
 
 		//ofDrawEllipse(x, y, w, w);

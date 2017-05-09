@@ -130,7 +130,7 @@ public:
 	ofParameter<int> sc1_xLoc = 1163;
 	ofParameter<int> sc1_yLoc = 362;
 	ofParameter<float> sc1_opac = 20;
-	ofParameter<float> sc1_startFreq = 20;
+	ofParameter<int> sc1_startFreq = 0;
 	ofParameter<int> sc1_freqStep = 10;
 	ofParameter<float> sc1_smoothAmount = 0.98f;
 
