@@ -38,6 +38,11 @@ void ofApp::setup() {
 		myBars[i].setup(i, sc5_xLoc, sc5_yLoc);
 	}
 
+	//create elliptical orbit objects - Scene 7
+	for (int i = 0; i < NELLIPSES; i++) {
+		myEllipses[i].setup(i, sc7_xStart, sc7_yStart, sc7_xSpread, sc7_ySpread);
+	}
+
 	//create bulb objects
 	for (int i = 0; i<NBULBS; i++) {
 		myBulb[i].setup(i, planWidth, planHeight, planOffsetX, planOffsetY, bulbSize);
@@ -193,6 +198,9 @@ void ofApp::draw() {
 		break;
 	case SCENE_6:
 		mainScene_6();
+		break;
+	case SCENE_7:
+		mainScene_7();
 		break;
 	case SCENE_9:
 		mainScene_9();
@@ -564,6 +572,56 @@ void ofApp::mainScene_6() {
 
 }
 
+//-------------------------------------------------------------- SCENE 07
+void ofApp::mainScene_7() {
+
+	vector<float> samples = fftChannelL.getFftNormData();
+
+	ofPushMatrix();
+	ofTranslate(sc7_xLoc, sc7_yLoc);
+	for (int i = 0; i < NELLIPSES; i++) {
+		myEllipses[i].update(sc7_xStart, sc7_yStart, sc7_xSpread, sc7_ySpread);
+		myEllipses[i].draw();
+	}
+	ofPopMatrix();
+
+	//grab screenshot  before bulbs are drawn
+	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
+
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	}
+	else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight);
+	}
+
+	for (int i = 0; i < NBULBS; i++) {
+		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < planWidth
+			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < planHeight) {
+			tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
+																							  ///uncomment to check colour being sent to bulb object
+																							  ///printf("myBulb - colour: %i\n", tmpCol.r);
+		}
+		else {
+			tmpCol = (0, 0, 0);
+		}
+
+		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
+		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+
+		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+
+		myBulb[i].draw_sc1(adjustedBrightness); //call draw sending colour value to object.
+
+		sendDMXVals(i);
+
+	}
+
+}
+
 //-------------------------------------------------------------- SCENE 9 - Glimmer / Noise
 void ofApp::mainScene_9() {
 
@@ -645,7 +703,8 @@ void ofApp::keyPressed(int key) {
 	switch (key)
 	{
 	case '1':
-		myScene = SCENE_1;;
+		myScene = SCENE_1;
+		//gui.scene_07.minimize();
 		break;
 	case '2':
 		myScene = SCENE_2;
@@ -661,6 +720,9 @@ void ofApp::keyPressed(int key) {
 		break;
 	case '6':
 		myScene = SCENE_6;
+		break;
+	case '7':
+		myScene = SCENE_7;
 		break;
 	case '9':
 		myScene = SCENE_9;
@@ -848,6 +910,17 @@ void ofApp::initGUI() {
 	scene_06.add(sc6_smoothAmount.set("smooth amount", sc6_smoothAmount, 0.5, 0.99));
 
 	gui.add(scene_06);
+
+	//****** SCENE 7 GUI CONTROLS ********//
+	scene_07.setName("SCENE 07");
+	scene_07.add(sc7_xLoc.set("X location", sc7_xLoc, 0, ofGetWidth()));
+	scene_07.add(sc7_yLoc.set("Y location", sc7_yLoc, 0, ofGetHeight()));
+	scene_07.add(sc7_xStart.set("X hole size", sc7_xStart, 0, 200));
+	scene_07.add(sc7_yStart.set("Y hole size", sc7_yStart, 0, 200));
+	scene_07.add(sc7_xSpread.set("X Spread", sc7_xSpread, 0, 200));
+	scene_07.add(sc7_ySpread.set("Y Spread", sc7_ySpread, 0, 200));
+
+	gui.add(scene_07);
 
 	//****** SCENE 9 GUI CONTROLS ********//
 	scene_09.setName("SCENE 09");

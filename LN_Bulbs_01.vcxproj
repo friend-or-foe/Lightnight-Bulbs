@@ -218,6 +218,7 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIn
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
     <ClCompile Include="src\bulbClass.cpp" />
     <ClCompile Include="src\centCirc.cpp" />
+    <ClCompile Include="src\ellipse.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Spinners.cpp" />
@@ -262,6 +263,7 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIn
     <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
     <ClInclude Include="src\bulbClass.h" />
     <ClInclude Include="src\centCirc.h" />
+    <ClInclude Include="src\ellipse.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Spinners.h" />
     <ClInclude Include="src\vertBars.h" />

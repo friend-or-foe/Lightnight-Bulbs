@@ -5,6 +5,7 @@
 #include "Spinners.h"
 #include "centCirc.h"
 #include "vertBars.h"
+#include "ellipse.h"
 
 #include "ofxDmx.h" //include ofxDM addon
 #include "ofxGui.h" //include GUI addon
@@ -16,6 +17,7 @@
 #define NBULBS 70
 #define NSPINNERS 16
 #define NBARS 32
+#define NELLIPSES 60
 
 //define scene options
 typedef enum {
@@ -67,6 +69,7 @@ public:
 	Bulb myBulb[NBULBS]; //create bulb array
 	Spinners mySpinner[NSPINNERS];
 	Bar myBars[NBARS];
+	ellipse myEllipses[NELLIPSES];
 
 	ofImage tmpImage; //image for screengrab to be saved to. The bulbs pick their colour from this
 	ofColor tmpCol; //stores the colour value to pass to bulbs
@@ -95,7 +98,8 @@ public:
 	ofParameterGroup scene_03; //controller group scene 3
 	ofParameterGroup scene_04; //controller group scene 4
 	ofParameterGroup scene_05; //controller group scene 5
-	ofParameterGroup scene_06; //controller group scene 5
+	ofParameterGroup scene_06; //controller group scene 6
+	ofParameterGroup scene_07; //controller group scene 7
 
 	ofParameterGroup scene_09; //controller group scene 9 - glimmer
 	ofParameterGroup scene_00; //controller group scene 0
@@ -174,6 +178,14 @@ public:
 	ofParameter<int> sc6_freqStep = 10;
 	ofParameter<float> sc6_smoothAmount = 0.98f;
 
+	//---------------------------------------- scene 07
+	ofParameter<int> sc7_xLoc = 1163;
+	ofParameter<int> sc7_yLoc = 362;
+	ofParameter<float> sc7_xStart = 100;
+	ofParameter<float> sc7_yStart = 50;
+	ofParameter<float> sc7_xSpread = 60;
+	ofParameter<float> sc7_ySpread = 30;
+
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;
 	ofParameter<float> sc9_fineFadeSpeed = 0.01;
@@ -193,6 +205,7 @@ public:
 	void mainScene_4(); //MIDI Test
 	void mainScene_5(); //MIDI bars
 	void mainScene_6(); //place frequencies
+	void mainScene_7(); //elliptical orbiters
 
 	void mainScene_9(); //glimmer
 	void mainScene_0(); //test scene Fade all
