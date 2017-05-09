@@ -89,32 +89,37 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 
 	//---------------------------------------------- Scene 5 MIDI
 	if (myScene == SCENE_5) {
-		if(midiMessage.velocity != 0){
-		int pitchBase = 23;
-		int midiKey = midiMessage.pitch;
-		if ((midiKey >= pitchBase) && (midiKey <= (pitchBase + sc5_numBars))) {
-			float adjustedBrightness = ofMap(255, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
-			myBars[midiKey - pitchBase].bright = adjustedBrightness;
-		}
+		if (midiMessage.velocity != 0) {
+			if (midiMessage.channel == 1) {
+			int pitchBase = 36;
+			int midiKey = midiMessage.pitch;
+				if ((midiKey >= pitchBase) && (midiKey <= (pitchBase + sc5_numBars))) {
+					float adjustedBrightness = ofMap(255, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+					myBars[midiKey - pitchBase].bright = adjustedBrightness;
+				}
+			}
+			
 		}	
 	}
 
 	if (myScene == SCENE_4) {
-		if (midiMessage.channel == 1) {
-			float myBright = midiMessage.velocity * 2;
+		if (midiMessage.velocity != 0) {
+			if (midiMessage.channel == 1) {
+				float myBright = 255;/// midiMessage.velocity * 2;
 
-			float adjustedBrightness = 0;
-			int thisBulb = midiMessage.pitch;
+				float adjustedBrightness = 0;
+				int thisBulb = midiMessage.pitch;
 
-			//float mainBright = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
-			//float fadeSpeed = sc9_fadeSpeed;
-
-
+				//float mainBright = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
+				//float fadeSpeed = sc9_fadeSpeed;
 
 
-			adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
-			myBulb[thisBulb].myTrigger = true;
-			myBulb[thisBulb].dmxLightVal = adjustedBrightness;
+
+
+				adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+				myBulb[thisBulb].myTrigger = true;
+				myBulb[thisBulb].dmxLightVal = adjustedBrightness;
+			}
 		}
 	}
 	//midiControl = midiMessage.control;
@@ -489,7 +494,7 @@ void ofApp::mainScene_5() {
 	}
 
 	//grab screenshot  before bulbs are drawn
-	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
+	//tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
 
 	//grab screenshot  before bulbs are drawn
 	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
