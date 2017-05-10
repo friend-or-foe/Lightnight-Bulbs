@@ -1,6 +1,6 @@
 <group>
 	<Master>
-		<master_brightness>149.617</master_brightness>
+		<master_brightness>255</master_brightness>
 		<bulb_size>16.0804</bulb_size>
 		<draw_plan>0</draw_plan>
 	</Master>
@@ -15,13 +15,14 @@
 	</SCENE_01>
 <group/>
 	<SCENE_02>
-		<X_location>1163</X_location>
-		<Y_location>362</Y_location>
-		<rotation_speed>4</rotation_speed>
-		<scale>1</scale>
-		<opacity_multiplier>234.694</opacity_multiplier>
-		<frequency_step>10</frequency_step>
-		<smooth_amount>0.9</smooth_amount>
+		<X_location>1031</X_location>
+		<Y_location>265</Y_location>
+		<rotation_speed>0.663265</rotation_speed>
+		<scale>1.84694</scale>
+		<opacity_multiplier>219.388</opacity_multiplier>
+		<frequency_step>5</frequency_step>
+		<smooth_amount>0.9725</smooth_amount>
+	<start_frequency>0</start_frequency>
 	</SCENE_02>
 	<SCENE_03>
 		<X_location>1163</X_location>
@@ -33,11 +34,11 @@
 	<range>64</range>
 	</SCENE_03>
 	<SCENE_09>
-		<bulb_brightness>0</bulb_brightness>
-		<fade_speed>0</fade_speed>
+		<bulb_brightness>68</bulb_brightness>
+		<fade_speed>0.0306122</fade_speed>
 		<noise_scale>0</noise_scale>
-		<chance_of_change>0</chance_of_change>
-	<Fine_Fade_Speed>0.01</Fine_Fade_Speed>
+		<chance_of_change>2.29592</chance_of_change>
+	<Fine_Fade_Speed>0.122449</Fine_Fade_Speed>
 	</SCENE_09>
 	<SCENE_00>
 		<bulb_brightness>0</bulb_brightness>

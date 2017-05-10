@@ -148,6 +148,7 @@ public:
 	ofParameter<float> sc2_rotSpeed = 4;
 	ofParameter<float> sc2_scale = 1;
 	ofParameter<float> sc2_opac = 255;
+	ofParameter<int> sc2_startFreq = 0;
 	ofParameter<int> sc2_freqStep = 10;
 	ofParameter<float> sc2_smoothAmount = 0.90f;
 	

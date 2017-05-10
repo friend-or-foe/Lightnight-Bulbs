@@ -300,7 +300,7 @@ void ofApp::mainScene_2() {
 	ofScale(sc2_scale, sc2_scale);
 	ofRotate(sc2_baseRot);
 
-	for (int i = 0; i < NSPINNERS; i++) {
+	for (int i = sc2_startFreq; i < NSPINNERS; i++) {
 		//smoothing for fft values
 		float value = samples[i];// *= 0.993f;
 		fftSmooth[i*sc2_freqStep] *= sc2_smoothAmount;
@@ -880,6 +880,7 @@ void ofApp::initGUI() {
 	scene_02.add(sc2_rotSpeed.set("rotation speed", sc2_rotSpeed, 0, 10));
 	scene_02.add(sc2_scale.set("scale", sc2_scale, 0, 2.0));
 	scene_02.add(sc2_opac.set("opacity multiplier", sc2_opac, 0, 2000));
+	scene_02.add(sc2_startFreq.set("start frequency", sc2_startFreq, 0, 100));
 	scene_02.add(sc2_freqStep.set("frequency step", sc2_freqStep, 1, 100));
 	scene_02.add(sc2_smoothAmount.set("smooth amount", sc2_smoothAmount, 0.5, 0.99));
 
