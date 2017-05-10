@@ -97,6 +97,9 @@
     <ClCompile Include="src\ellipse.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\MidiShapes.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -282,6 +285,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\ellipse.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MidiShapes.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

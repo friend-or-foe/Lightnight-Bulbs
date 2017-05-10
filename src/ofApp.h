@@ -6,6 +6,7 @@
 #include "centCirc.h"
 #include "vertBars.h"
 #include "ellipse.h"
+#include "MidiShapes.h"
 
 #include "ofxDmx.h" //include ofxDM addon
 #include "ofxGui.h" //include GUI addon
@@ -18,6 +19,7 @@
 #define NSPINNERS 16
 #define NBARS 32
 #define NELLIPSES 60
+#define NSHAPES 25
 
 //define scene options
 typedef enum {
@@ -70,6 +72,7 @@ public:
 	Spinners mySpinner[NSPINNERS];
 	Bar myBars[NBARS];
 	ellipse myEllipses[NELLIPSES];
+	MidiShapes myShapes[NSHAPES];
 
 	ofImage tmpImage; //image for screengrab to be saved to. The bulbs pick their colour from this
 	ofColor tmpCol; //stores the colour value to pass to bulbs
@@ -163,7 +166,15 @@ public:
 	ofParameter<int> sc3_lifeSpan = 80; //life of particle
 	ofParameter<float> sc3_range = 64.0; //range that is affected by line
 
+	//---------------------------------------- scene 04
+	int plinkCount = 0; //keep traack of number of 'plink' shapes on screen
+	int bassCount = 10; //keep traack of number of 'Bass' shapes on screen
+	int keyCount = 19; //keep traack of number of 'key' shapes on screen
 
+	//GUI
+	ofParameter<float> sc4_fade = 10;
+	ofParameter<float> sc4_plinkMin = 50; //minimum size for plink Shapes
+	ofParameter<float> sc4_plinkMax = 300; //maximum size for plink shapes
 	//---------------------------------------- scene 05
 	
 	ofParameter<int> sc5_xLoc = 600;

@@ -220,6 +220,7 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIn
     <ClCompile Include="src\centCirc.cpp" />
     <ClCompile Include="src\ellipse.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MidiShapes.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Spinners.cpp" />
     <ClCompile Include="src\vertBars.cpp" />
@@ -264,6 +265,7 @@ D:\openFrameworks\of_v0.9.8_vs_release\addons\ofxMidi\libs\rtmidi;%(AdditionalIn
     <ClInclude Include="src\bulbClass.h" />
     <ClInclude Include="src\centCirc.h" />
     <ClInclude Include="src\ellipse.h" />
+    <ClInclude Include="src\MidiShapes.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Spinners.h" />
     <ClInclude Include="src\vertBars.h" />

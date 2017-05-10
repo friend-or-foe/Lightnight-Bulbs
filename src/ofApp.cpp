@@ -48,6 +48,13 @@ void ofApp::setup() {
 		myBulb[i].setup(i, planWidth, planHeight, planOffsetX, planOffsetY, bulbSize);
 	}
 
+	//create midiShape objects
+	for (int i = 0; i<NSHAPES; i++) {
+		float tempX = ofRandom(planOffsetX, (planOffsetX + planWidth));
+		float tempY = ofRandom(planOffsetY, (planOffsetY + planHeight));
+		myShapes[i].setup(i, tempX, tempY);
+	}
+
 	///--------- INIT MIDI --------------//
 	initMIDI();
 
@@ -105,20 +112,20 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 	if (myScene == SCENE_4) {
 		if (midiMessage.velocity != 0) {
 			if (midiMessage.channel == 1) {
-				float myBright = 255;/// midiMessage.velocity * 2;
 
-				float adjustedBrightness = 0;
-				int thisBulb = midiMessage.pitch;
-
-				//float mainBright = ofMap(sc9_allBrightness, 0, 255, 0, masterBrightness, true);
-				//float fadeSpeed = sc9_fadeSpeed;
-
-
-
-
-				adjustedBrightness = ofMap(myBright, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
-				myBulb[thisBulb].myTrigger = true;
-				myBulb[thisBulb].dmxLightVal = adjustedBrightness;
+						if (plinkCount < 10) {
+							float tempX = ofRandom(planOffsetX, (planOffsetX + planWidth));
+							float tempY = ofRandom(planOffsetY, (planOffsetY + planHeight));
+							myShapes[plinkCount].initPlink(plinkCount, tempX, tempY, 125);
+							plinkCount++;
+						}
+						else {
+							plinkCount = 0;
+							float tempX = ofRandom(planOffsetX, (planOffsetX + planWidth));
+							float tempY = ofRandom(planOffsetY, (planOffsetY + planHeight));
+							myShapes[plinkCount].initPlink(plinkCount, tempX, tempY, 125);
+							plinkCount++;
+						}
 			}
 		}
 	}
@@ -441,8 +448,10 @@ void ofApp::mainScene_3() {
 //-------------------------------------------------------------- SCENE 04
 void ofApp::mainScene_4() {
 
-
-	
+	//ofSetColor(255);
+	for (int i = 0; i < NSHAPES; i++) {
+		myShapes[i].draw(sc4_fade);
+	}
 
 	
 	if (drawPlan) {
@@ -743,6 +752,23 @@ void ofApp::keyPressed(int key) {
 		break;
 	}
 
+	if (myScene == SCENE_4) {
+		if (key == 'q') {
+			if (plinkCount < 10) {
+				float tempX = ofRandom(planOffsetX, (planOffsetX + planWidth));
+				float tempY = ofRandom(planOffsetY, (planOffsetY + planHeight));
+				myShapes[plinkCount].initPlink(plinkCount, tempX, tempY, 125);
+				plinkCount++;
+			}
+			else {
+				plinkCount = 0;
+				float tempX = ofRandom(planOffsetX, (planOffsetX + planWidth));
+				float tempY = ofRandom(planOffsetY, (planOffsetY + planHeight));
+				myShapes[plinkCount].initPlink(plinkCount, tempX, tempY, 125);
+				plinkCount++;
+			}
+		}
+	}
 
 	//printf("key: %i\n", key);
 	if (myScene == SCENE_5) {
@@ -901,6 +927,7 @@ void ofApp::initGUI() {
 
 	//****** SCENE 4 GUI CONTROLS ********//
 	scene_04.setName("SCENE 04");
+	scene_04.add(sc4_fade.set("fade speed", sc4_fade, 1, 20));
 	gui.add(scene_04);
 
 	//****** SCENE 5 GUI CONTROLS ********//
