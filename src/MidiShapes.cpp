@@ -34,6 +34,7 @@ void MidiShapes::draw(float _fadeSpeed) {
 	}
 
 	if ((ID >= 10) && (ID < 19)){
+		if(bright> 0) { ofSetColor(255, bright + ofRandom(-bright, bright/4)); }
 		drawBass(_fadeSpeed);
 	}
 
@@ -93,8 +94,8 @@ void MidiShapes::initPlink(int _ID, float _x, float _y, float _initBright) {
 	y = _y;
 	bright = _initBright;
 
-	width = ofRandom(200, 300);
-	height = ofRandom(200, 300);
+	width = ofRandom(100, 200);
+	height = ofRandom(100, 200);
 
 }
 
@@ -105,7 +106,7 @@ void MidiShapes::initBass(int _ID, float _x, float _y, float _initBright) {
 	y = _y;
 	bright = _initBright;
 
-	width = ofRandom(50, 100);
+	width = ofRandom(100, 200);
 	height = 500;// ofRandom(400, 100);
 
 	angle = ofRandom(360);

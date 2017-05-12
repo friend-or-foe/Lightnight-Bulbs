@@ -172,9 +172,9 @@ public:
 	int keyCount = 19; //keep traack of number of 'key' shapes on screen
 
 	ofParameter<float> sc4_leftEdge = 100; //left edge border
-	ofParameter<float> sc4_rightEdge = 1000; //right edge border
+	ofParameter<float> sc4_rightEdge = 1100; //right edge border
 	ofParameter<float> sc4_topEdge = 100; //top edge border
-	ofParameter<float> sc4_botEdge = 300; //bottom edge border
+	ofParameter<float> sc4_botEdge = 400; //bottom edge border
 
 	//GUI
 	ofParameter<float> sc4_fade = 10;

@@ -899,7 +899,7 @@ void ofApp::mouseReleased(int x, int y, int button) {
 		myBulb[i].mouseReleased();
 	}
 
-	if (myScene = SCENE_3) {
+	if (myScene == SCENE_3) {
 	sc3_xLoc = ofGetMouseX();
 	sc3_yLoc = ofGetMouseY();
 }
