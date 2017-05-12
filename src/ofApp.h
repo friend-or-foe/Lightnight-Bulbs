@@ -171,8 +171,15 @@ public:
 	int bassCount = 10; //keep traack of number of 'Bass' shapes on screen
 	int keyCount = 19; //keep traack of number of 'key' shapes on screen
 
+	ofParameter<float> sc4_leftEdge = 100; //left edge border
+	ofParameter<float> sc4_rightEdge = 1000; //right edge border
+	ofParameter<float> sc4_topEdge = 100; //top edge border
+	ofParameter<float> sc4_botEdge = 300; //bottom edge border
+
 	//GUI
 	ofParameter<float> sc4_fade = 10;
+	
+
 	ofParameter<float> sc4_plinkMin = 50; //minimum size for plink Shapes
 	ofParameter<float> sc4_plinkMax = 300; //maximum size for plink shapes
 	//---------------------------------------- scene 05

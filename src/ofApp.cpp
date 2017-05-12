@@ -204,6 +204,7 @@ void ofApp::draw() {
 		mainScene_3();
 			break;
 	case SCENE_4:
+		
 		mainScene_4();
 	case SCENE_5:
 		mainScene_5();
@@ -449,9 +450,11 @@ void ofApp::mainScene_3() {
 void ofApp::mainScene_4() {
 
 	//ofSetColor(255);
+	ofSetRectMode(OF_RECTMODE_CENTER);
 	for (int i = 0; i < NSHAPES; i++) {
 		myShapes[i].draw(sc4_fade);
 	}
+	ofSetRectMode(OF_RECTMODE_CORNER);
 
 	//grab screenshot  before bulbs are drawn
 	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
@@ -753,25 +756,57 @@ void ofApp::keyPressed(int key) {
 		break;
 	}
 
+	//----------------- TEST SCENE 4 SHAPES ------------------//
 	if (myScene == SCENE_4) {
 		if (key == 'q') {
 			if (plinkCount < 10) {
-				float tempX = ofRandom(planOffsetX, (planOffsetX + planWidth));
-				float tempY = ofRandom(planOffsetY, (planOffsetY + planHeight));
+				float tempX = ofRandom(planOffsetX + sc4_leftEdge, (planOffsetX + sc4_rightEdge));
+				float tempY = ofRandom(planOffsetY + sc4_topEdge, (planOffsetY + sc4_botEdge));
 				myShapes[plinkCount].initPlink(plinkCount, tempX, tempY, 125);
 				plinkCount++;
 			}
 			else {
 				plinkCount = 0;
-				float tempX = ofRandom(planOffsetX, (planOffsetX + planWidth));
-				float tempY = ofRandom(planOffsetY, (planOffsetY + planHeight));
+				float tempX = ofRandom(planOffsetX + sc4_leftEdge, (planOffsetX + sc4_rightEdge));
+				float tempY = ofRandom(planOffsetY + sc4_topEdge, (planOffsetY + sc4_botEdge));
 				myShapes[plinkCount].initPlink(plinkCount, tempX, tempY, 125);
 				plinkCount++;
+			}
+		}
+		if (key == 'w') {
+			if (bassCount < 19) {
+				float tempX = ofRandom(planOffsetX + sc4_leftEdge, (planOffsetX + sc4_rightEdge));
+				float tempY = planOffsetY + (planHeight / 2);
+				myShapes[bassCount].initBass(bassCount, tempX, tempY, 255);
+				bassCount++;
+			}
+			else {
+				bassCount = 10;
+				float tempX = ofRandom(planOffsetX + sc4_leftEdge, (planOffsetX + sc4_rightEdge));
+				float tempY = planOffsetY + (planHeight / 2);
+				myShapes[bassCount].initBass(bassCount, tempX, tempY, 255);
+				bassCount++;
+			}
+		}
+		if (key == 'e') {
+			if (keyCount < 25) {
+				float tempX = planOffsetX + (planHeight/2);
+				float tempY = planOffsetY + (planHeight / 2);
+				myShapes[keyCount].initKey(keyCount, tempX, tempY, 255);
+				keyCount++;
+			}
+			else {
+				keyCount = 19;
+				float tempX = planOffsetX + (planHeight / 2);
+				float tempY = planOffsetY + (planHeight / 2);
+				myShapes[keyCount].initKey(keyCount, tempX, tempY, 255);
+				keyCount++;
 			}
 		}
 	}
 
 	//printf("key: %i\n", key);
+	//----------------- TEST SCENE 4 SHAPES ------------------//
 	if (myScene == SCENE_5) {
 		
 		switch (key)
@@ -929,6 +964,8 @@ void ofApp::initGUI() {
 	//****** SCENE 4 GUI CONTROLS ********//
 	scene_04.setName("SCENE 04");
 	scene_04.add(sc4_fade.set("fade speed", sc4_fade, 1, 20));
+	scene_04.add(sc4_plinkMin.set("min plink size", sc4_plinkMin, 20, 100));
+	scene_04.add(sc4_plinkMax.set("max plink size", sc4_plinkMax, 100, 300));
 	gui.add(scene_04);
 
 	//****** SCENE 5 GUI CONTROLS ********//

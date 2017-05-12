@@ -38,7 +38,10 @@ void MidiShapes::draw(float _fadeSpeed) {
 	}
 
 	if (ID >= 19) {
+		ofNoFill();
+		ofSetLineWidth(30);
 		drawKey(_fadeSpeed);
+		ofSetLineWidth(1);
 	}
 
 }
@@ -56,7 +59,11 @@ void MidiShapes::drawPlink(float _fadeSpeed){
 
 void MidiShapes::drawBass(float _fadeSpeed) {
 
-	ofDrawRectangle(x, y, width, height);
+	ofPushMatrix();
+	ofTranslate(x, y);
+	ofRotate(angle);
+	ofDrawRectangle(0, 0, width, height);
+	ofPopMatrix();
 
 	//fade out
 	if (bright > 0) {
@@ -69,7 +76,9 @@ void MidiShapes::drawBass(float _fadeSpeed) {
 
 void MidiShapes::drawKey(float _fadeSpeed) {
 
+	
 	ofDrawEllipse(x, y, width, width);
+
 	//fade out
 	if (bright > 0) {
 		bright -= _fadeSpeed;
@@ -99,7 +108,7 @@ void MidiShapes::initBass(int _ID, float _x, float _y, float _initBright) {
 	height = 500;// ofRandom(400, 100);
 
 	angle = ofRandom(360);
-	rotSpeed = ofRandom(-2, 2);
+	rotSpeed = ofRandom(-10, 10);
 
 }
 
