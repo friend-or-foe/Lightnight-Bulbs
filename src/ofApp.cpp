@@ -112,7 +112,6 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 	if (myScene == SCENE_4) {
 		if (midiMessage.velocity != 0) {
 			if (midiMessage.channel == 1) {
-
 						if (plinkCount < 10) {
 							float tempX = ofRandom(planOffsetX, (planOffsetX + planWidth));
 							float tempY = ofRandom(planOffsetY, (planOffsetY + planHeight));
@@ -126,6 +125,36 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 							myShapes[plinkCount].initPlink(plinkCount, tempX, tempY, 125);
 							plinkCount++;
 						}
+			}
+			if (midiMessage.channel == 2) {
+				if (bassCount < 19) {
+					float tempX = ofRandom(planOffsetX + sc4_leftEdge, (planOffsetX + sc4_rightEdge));
+					float tempY = planOffsetY + (planHeight / 2);
+					myShapes[bassCount].initBass(bassCount, tempX, tempY, 255);
+					bassCount++;
+				}
+				else {
+					bassCount = 10;
+					float tempX = ofRandom(planOffsetX + sc4_leftEdge, (planOffsetX + sc4_rightEdge));
+					float tempY = planOffsetY + (planHeight / 2);
+					myShapes[bassCount].initBass(bassCount, tempX, tempY, 255);
+					bassCount++;
+				}
+			}
+			if (midiMessage.channel == 3) {
+				if (keyCount < 25) {
+					float tempX = planOffsetX + (planWidth / 2);
+					float tempY = planOffsetY + (planHeight / 2);
+					myShapes[keyCount].initKey(keyCount, tempX, tempY, 255);
+					keyCount++;
+				}
+				else {
+					keyCount = 19;
+					float tempX = planOffsetX + (planWidth / 2);
+					float tempY = planOffsetY + (planHeight / 2);
+					myShapes[keyCount].initKey(keyCount, tempX, tempY, 255);
+					keyCount++;
+				}
 			}
 		}
 	}
@@ -204,7 +233,6 @@ void ofApp::draw() {
 		mainScene_3();
 			break;
 	case SCENE_4:
-		
 		mainScene_4();
 	case SCENE_5:
 		mainScene_5();
@@ -452,7 +480,9 @@ void ofApp::mainScene_4() {
 	//ofSetColor(255);
 	ofSetRectMode(OF_RECTMODE_CENTER);
 	for (int i = 0; i < NSHAPES; i++) {
+		
 		myShapes[i].draw(sc4_fade);
+		
 	}
 	ofSetRectMode(OF_RECTMODE_CORNER);
 
@@ -790,14 +820,14 @@ void ofApp::keyPressed(int key) {
 		}
 		if (key == 'e') {
 			if (keyCount < 25) {
-				float tempX = planOffsetX + (planHeight/2);
+				float tempX = planOffsetX + (planWidth /2);
 				float tempY = planOffsetY + (planHeight / 2);
 				myShapes[keyCount].initKey(keyCount, tempX, tempY, 255);
 				keyCount++;
 			}
 			else {
 				keyCount = 19;
-				float tempX = planOffsetX + (planHeight / 2);
+				float tempX = planOffsetX + (planWidth / 2);
 				float tempY = planOffsetY + (planHeight / 2);
 				myShapes[keyCount].initKey(keyCount, tempX, tempY, 255);
 				keyCount++;

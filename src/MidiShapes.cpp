@@ -39,7 +39,7 @@ void MidiShapes::draw(float _fadeSpeed) {
 
 	if (ID >= 19) {
 		ofNoFill();
-		ofSetLineWidth(30);
+		ofSetLineWidth(10);
 		drawKey(_fadeSpeed);
 		ofSetLineWidth(1);
 	}
@@ -76,8 +76,9 @@ void MidiShapes::drawBass(float _fadeSpeed) {
 
 void MidiShapes::drawKey(float _fadeSpeed) {
 
-	
-	ofDrawEllipse(x, y, width, width);
+	for (int i = 0; i < 10; i++){
+	ofDrawEllipse(x, y, width+(10*i), width + (10 * i));
+	}
 
 	//fade out
 	if (bright > 0) {
@@ -119,5 +120,5 @@ void MidiShapes::initKey(int _ID, float _x, float _y, float _initBright) {
 	y = _y;
 	bright = _initBright;
 
-	width = ID * 10;
+	width = 30 + ((ID-19) * 100);
 }
