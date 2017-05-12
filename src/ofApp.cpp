@@ -453,7 +453,9 @@ void ofApp::mainScene_4() {
 		myShapes[i].draw(sc4_fade);
 	}
 
-	
+	//grab screenshot  before bulbs are drawn
+	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
+
 	if (drawPlan) {
 		ofSetColor(255);
 		plan.draw(planOffsetX, planOffsetY);
@@ -474,14 +476,13 @@ void ofApp::mainScene_4() {
 		else {
 			tmpCol = (0, 0, 0);
 		}
-	}
+
 		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
 		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
 
-		//float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
-		
-	for(int i= 0; i < NBULBS; i++){
-		myBulb[i].draw_sc4(); //call draw sending colour value to object.
+		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+
+		myBulb[i].draw_sc1(adjustedBrightness); //call draw sending colour value to object.
 
 		sendDMXVals(i);
 
