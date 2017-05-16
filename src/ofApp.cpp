@@ -771,29 +771,59 @@ void ofApp::keyPressed(int key) {
 	{
 	case '1':
 		myScene = SCENE_1;
-		//gui.scene_07.minimize();
+		for (int i = 0; i < 9; i++) {
+			gui.getGroup("SCENE 0" + ofToString(i)).minimize();
+		}
+			gui.getGroup("SCENE 01").maximize();
 		break;
 	case '2':
 		myScene = SCENE_2;
-		gui.minimize();
+		for (int i = 0; i < 9; i++) {
+				gui.getGroup("SCENE 0" + ofToString(i)).minimize();
+		}
+			gui.getGroup("SCENE 02").maximize();
 		break;
 	case '3':
 		myScene = SCENE_3;
+		for (int i = 0; i < 9; i++) {
+				gui.getGroup("SCENE 0" + ofToString(i)).minimize();
+		}
+			gui.getGroup("SCENE 03").maximize();
 		break;
 	case '4':
 		myScene = SCENE_4;
+		for (int i = 0; i < 9; i++) {
+				gui.getGroup("SCENE 0" + ofToString(i)).minimize();
+		}
+			gui.getGroup("SCENE 04").maximize();
 		break;
 	case '5':
 		myScene = SCENE_5;
+		for (int i = 0; i < 9; i++) {
+				gui.getGroup("SCENE 0" + ofToString(i)).minimize();
+		}
+		gui.getGroup("SCENE 05").maximize();
 		break;
 	case '6':
 		myScene = SCENE_6;
+		for (int i = 0; i < 9; i++) {
+				gui.getGroup("SCENE 0" + ofToString(i)).minimize();
+		}
+		gui.getGroup("SCENE 06").maximize();
 		break;
 	case '7':
 		myScene = SCENE_7;
+		for (int i = 0; i < 9; i++) {
+				gui.getGroup("SCENE 0" + ofToString(i)).minimize();
+		}
+		gui.getGroup("SCENE 07").maximize();
 		break;
 	case '9':
 		myScene = SCENE_9;
+		for (int i = 0; i < 9; i++) {
+			gui.getGroup("SCENE 0" + ofToString(i)).minimize();	
+		}
+		gui.getGroup("SCENE 09").maximize();
 		break;
 	case '0':
 		myScene = SCENE_0;
