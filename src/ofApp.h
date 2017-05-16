@@ -207,6 +207,9 @@ public:
 	ofParameter<int> sc6_freqStep = 10;
 	ofParameter<float> sc6_smoothAmount = 0.98f;
 
+	ofParameter<float> sc6_russBright = 125;
+	ofParameter<float> sc6_russFade = 10;
+
 	//---------------------------------------- scene 07
 	ofParameter<int> sc7_xLoc = 1163;
 	ofParameter<int> sc7_yLoc = 362;

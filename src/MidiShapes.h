@@ -17,10 +17,14 @@ public:
 	void drawBass(float _fadeSpeed);
 	void drawKey(float _fadeSpeed);
 
+	void drawRussPlink(float _fadeSpeed);
+
 	//initiate new shapes
 	void initPlink(int _ID, float _x, float _y, float _initBright);
 	void initBass(int _ID, float _x, float _y, float _initBright);
 	void initKey(int _ID, float _x, float _y, float _initBright);
+
+	void initRussPlink(int _ID, float x, float y, float _initBright);
 
 	int ID;
 	float x;
@@ -32,6 +36,8 @@ public:
 
 	float angle = 0;
 	float rotSpeed = 0;
+
+	float rad = 0; //radius for ruses plinks
 
 	bool myTrigger = false;
 

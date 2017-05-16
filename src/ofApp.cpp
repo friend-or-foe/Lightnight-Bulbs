@@ -589,6 +589,19 @@ void ofApp::mainScene_6() {
 	///----------- DRAW FFT SHAPES ---------------//
 	drawFFT_scene6();
 
+	///----------- DRAW MIDI SHAPES ----------------
+	//ofSetColor(255);
+	//ofPushMatrix();
+	//ofTranslate(planOffsetX + (planWidth / 2), planOffsetY + (planHeight / 2));
+	ofSetRectMode(OF_RECTMODE_CENTER);
+	for (int i = 0; i < NSHAPES; i++) {
+
+		myShapes[i].drawRussPlink(sc6_russFade);
+
+	}
+	ofSetRectMode(OF_RECTMODE_CORNER);
+	//ofPopMatrix();
+
 	//grab screenshot  before bulbs are drawn
 	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
 
@@ -762,6 +775,7 @@ void ofApp::keyPressed(int key) {
 		break;
 	case '2':
 		myScene = SCENE_2;
+		gui.minimize();
 		break;
 	case '3':
 		myScene = SCENE_3;
@@ -836,14 +850,12 @@ void ofApp::keyPressed(int key) {
 	}
 
 	//printf("key: %i\n", key);
-	//----------------- TEST SCENE 4 SHAPES ------------------//
+	//----------------- TEST SCENE 5 SHAPES ------------------//
 	if (myScene == SCENE_5) {
 		
 		switch (key)
 		{
 		case 'q':
-			
-
 			myBars[0].bright = 255;
 			break;
 		case 'w':
@@ -867,6 +879,39 @@ void ofApp::keyPressed(int key) {
 			break;
 		}
 	}
+
+	//----------------- TEST SCENE 4 SHAPES ------------------//
+	if (myScene == SCENE_6) {
+		int randBulb = int(ofRandom(30, NBULBS));
+		switch (key)
+		{
+		case 'a':
+			myShapes[0].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+			break;
+		case 's':
+			myShapes[1].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+			break;
+		case 'd':
+			myShapes[2].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+			break;
+		case 'f':
+			myShapes[3].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+			break;
+		case 'g':
+			myShapes[4].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+			break;
+		case 'h':
+			myShapes[5].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+			break;
+		case 'j':
+			myShapes[6].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+			break;
+		case 'k':
+			myShapes[7].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+			break;
+		}
+	}
+
 }
 
 //--------------------------------------------------------------
@@ -1024,6 +1069,8 @@ void ofApp::initGUI() {
 	scene_06.add(sc6_opac.set("circle opacity", sc6_opac, 0, 255));
 	scene_06.add(sc6_freqStep.set("frequency step", sc6_freqStep, 1, 100));
 	scene_06.add(sc6_smoothAmount.set("smooth amount", sc6_smoothAmount, 0.5, 0.99));
+	scene_06.add(sc6_russBright.set("Russ Plink Brightness", sc6_russBright, 0, 255));
+	scene_06.add(sc6_russFade.set("russ fade speed", sc6_russFade, 0.1, 10));
 
 	gui.add(scene_06);
 

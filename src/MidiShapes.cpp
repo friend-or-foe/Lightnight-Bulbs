@@ -87,6 +87,21 @@ void MidiShapes::drawKey(float _fadeSpeed) {
 	}
 }
 
+void MidiShapes::drawRussPlink(float _fadeSpeed) {
+
+	ofSetColor(255, bright);
+
+
+	ofDrawRectangle(x, y, 10, 10);
+
+
+	//fade out
+	if (bright > 0) {
+		bright -= _fadeSpeed;
+	}
+
+}
+
 void MidiShapes::initPlink(int _ID, float _x, float _y, float _initBright) {
 
 	ID = _ID;
@@ -122,4 +137,13 @@ void MidiShapes::initKey(int _ID, float _x, float _y, float _initBright) {
 	bright = _initBright;
 
 	width = 30 + ((ID-19) * 100);
+}
+
+void MidiShapes::initRussPlink(int _ID, float _x, float _y, float _initBright) {
+
+	ID = _ID;
+	x = _x;
+	y = _y;
+	bright = _initBright;
+
 }
