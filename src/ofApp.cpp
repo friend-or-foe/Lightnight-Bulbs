@@ -497,24 +497,9 @@ void ofApp::mainScene_4() {
 		
 		myShapes[i].draw(sc4_fade);
 		
-		/*
-		if (i < 10) {
-			myShapes[i].drawPlink(sc4_fade);
+	
 		}
-
-		if ((ID >= 10) && (ID < 19)) {
-			if (bright> 0) { ofSetColor(255, bright + ofRandom(-bright, bright / 4)); }
-			drawBass(_fadeSpeed);
-		}
-
-		if (ID >= 19) {
-			ofNoFill();
-			ofSetLineWidth(10);
-			drawKey(_fadeSpeed);
-			ofSetLineWidth(1);
-		}
-		*/
-	}
+	
 	ofSetRectMode(OF_RECTMODE_CORNER);
 
 	//grab screenshot  before bulbs are drawn

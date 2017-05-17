@@ -49,7 +49,7 @@ void MidiShapes::draw(float _fadeSpeed) {
 
 void MidiShapes::drawPlink(float _fadeSpeed){
 
-	ofSetColor(255, bright);
+	
 
 	ofDrawRectangle(x, y, width, height);
 	
@@ -61,6 +61,8 @@ void MidiShapes::drawPlink(float _fadeSpeed){
 }
 
 void MidiShapes::drawBass(float _fadeSpeed) {
+
+	
 
 	ofPushMatrix();
 	ofTranslate(x, y);
@@ -78,6 +80,8 @@ void MidiShapes::drawBass(float _fadeSpeed) {
 }
 
 void MidiShapes::drawKey(float _fadeSpeed) {
+
+	
 
 	for (int i = 0; i < 10; i++){
 	ofDrawEllipse(x, y, width+(10*i), width + (10 * i));
