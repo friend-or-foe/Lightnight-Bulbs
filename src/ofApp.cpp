@@ -55,6 +55,17 @@ void ofApp::setup() {
 		myShapes[i].setup(i, tempX, tempY);
 	}
 
+	//create spot objects **SCENE 8**
+	for (int i = 0; i<NSPOTS; i++) {
+		if (i < 5) {
+			mySpots[i].pos.set(sc8_xLoc + (sc8_spacing*i), sc8_yLoc, 0);
+		}
+		else {
+			mySpots[i].pos.set(sc8_xLoc + (sc8_spacing*(i - 5)), sc8_yLoc + sc8_spacing, 0);
+		}
+	}
+
+
 	///--------- INIT MIDI --------------//
 	initMIDI();
 
@@ -242,6 +253,9 @@ void ofApp::draw() {
 		break;
 	case SCENE_7:
 		mainScene_7();
+		break;
+	case SCENE_8:
+		mainScene_8();
 		break;
 	case SCENE_9:
 		mainScene_9();
@@ -689,6 +703,60 @@ void ofApp::mainScene_7() {
 
 }
 
+//-------------------------------------------------------------- SCENE 08
+void ofApp::mainScene_8() {
+
+
+	drawFFT_scene8();
+
+	//--
+	//float barW = sc5_width / sc8_numSpots;
+
+	for (int i = 0; i < NSPOTS; i++) {
+		//sc8_xLoc -= 0.1;
+		//mySpots[i].update(i, sc8_xLoc, sc8_yLoc, sc8_spacing, sc8_move);
+		mySpots[i].update(sc8_move);
+	}
+
+
+	//grab screenshot  before bulbs are drawn
+	tmpImage.grabScreen(planOffsetX, planOffsetY, planWidth, planHeight);
+
+	if (drawPlan) {
+		ofSetColor(255);
+		plan.draw(planOffsetX, planOffsetY);
+	}
+	else {
+		ofNoFill();
+		ofSetColor(255);
+		ofDrawRectangle(planOffsetX, planOffsetY, planWidth, planHeight);
+	}
+
+	for (int i = 0; i < NBULBS; i++) {
+		if (myBulb[i].x - planOffsetX > 0 && myBulb[i].x - planOffsetX < planWidth
+			&& myBulb[i].y - planOffsetY > 0 && myBulb[i].y - planOffsetY < planHeight) {
+			tmpCol = tmpImage.getColor(myBulb[i].x - planOffsetX, myBulb[i].y - planOffsetY); //get pixel colour for object
+																							  ///uncomment to check colour being sent to bulb object
+																							  ///printf("myBulb - colour: %i\n", tmpCol.r);
+		}
+		else {
+			tmpCol = (0, 0, 0);
+		}
+
+		/*** IT MAY BE MORE EFFICIENT TO LINK ALL GLOBAL GUI CONTROLS TO BULB OBJECTS AS PER VIDEO TUTORIAL
+		THIS WOULD MEAN THE VALUES DO NOT NEED TO BE PASSED TO INDIVIDUAL OBJECTS THROUGH THE DRAW COMMAND*/
+
+		float adjustedBrightness = ofMap(tmpCol.r, 0, 255, 0, masterBrightness, true); //map the brightness to the masterBrightness variable
+
+		myBulb[i].draw_sc1(adjustedBrightness); //call draw sending colour value to object.
+
+		sendDMXVals(i);
+
+	}
+
+}
+
+
 //-------------------------------------------------------------- SCENE 9 - Glimmer / Noise
 void ofApp::mainScene_9() {
 
@@ -817,6 +885,13 @@ void ofApp::keyPressed(int key) {
 				gui.getGroup("SCENE 0" + ofToString(i)).minimize();
 		}
 		gui.getGroup("SCENE 07").maximize();
+		break;
+	case '8':
+		myScene = SCENE_8;
+		for (int i = 0; i < 9; i++) {
+			gui.getGroup("SCENE 0" + ofToString(i)).minimize();
+		}
+		gui.getGroup("SCENE 08").maximize();
 		break;
 	case '9':
 		myScene = SCENE_9;
@@ -1115,6 +1190,18 @@ void ofApp::initGUI() {
 
 	gui.add(scene_07);
 
+	//****** SCENE 8 GUI CONTROLS ********//
+	scene_08.setName("SCENE 08");
+	scene_08.add(sc8_sampleScale.set("sample scale", sc8_sampleScale, 0.0, 1000));
+	scene_08.add(sc8_xLoc.set("X location", sc8_xLoc, 0, ofGetWidth()));
+	scene_08.add(sc8_yLoc.set("Y location", sc8_yLoc, 0, ofGetHeight()));
+	scene_08.add(sc8_opac.set("circle opacity", sc8_opac, 0, 255));
+	scene_08.add(sc8_move.set("move left or right", sc8_move, -10, 10));
+	scene_08.add(sc8_startFreq.set("star fequency", sc8_startFreq, 0, 100));
+	scene_08.add(sc8_freqStep.set("frequency step", sc8_freqStep, 1, 100));
+	scene_08.add(sc8_smoothAmount.set("smooth amount", sc8_smoothAmount, 0.5, 0.99));
+	gui.add(scene_08);
+
 	//****** SCENE 9 GUI CONTROLS ********//
 	scene_09.setName("SCENE 09");
 	scene_09.add(sc9_allBrightness.set("bulb brightness", sc9_allBrightness, 0, 255));
@@ -1233,7 +1320,7 @@ void ofApp::drawSamples_scene1(vector<float> samples) {
 
 }
 
-//-------------------------------------------------------------- SCENE 6
+//-------------------------------------------------------------- SCENE 5
 void ofApp::drawFFT_scene5() {
 
 	ofSetColor(255, sc5_opac);
@@ -1323,6 +1410,54 @@ void ofApp::drawSamples_scene6(vector<float> samples) {
 	}
 
 }
+
+//-------------------------------------------------------------- SCENE 8
+void ofApp::drawFFT_scene8() {
+
+	ofSetColor(255, sc8_opac); //opacity can be used for midi key
+	ofPushMatrix();
+	ofTranslate(sc8_xLoc, sc8_yLoc);
+	drawSamples_scene8(fftChannelL.getFftNormData());
+	ofPopMatrix();
+
+	//uncomment to draw right channel
+	/*
+	ofPushMatrix();
+	ofTranslate(0, ofGetHeight() * 0.75);
+	drawSamples(fftChannelR.getFftNormData());
+	ofPopMatrix();
+	*/
+}
+
+void ofApp::drawSamples_scene8(vector<float> samples) {
+
+	int sampleWidth = ofGetWidth() / samples.size();
+	int sampleHeight = ofGetHeight() / 2;
+	int numOfSamples = samples.size();
+
+	for (int i = sc8_startFreq; i<numOfSamples; i += sc8_freqStep) {
+		int x = 0; // ofMap(i, 0, numOfSamples - 1, 0, ofGetWidth() - sampleWidth);
+		int y = 0;
+
+		//smoothing for fft values
+		float value = samples[i] * sc8_sampleScale;// *= 0.993f;
+		fftSmooth[i] *= sc1_smoothAmount;
+		if (fftSmooth[i] < value) {
+			fftSmooth[i] = value;
+		}
+
+		int w = 1 + abs(-fftSmooth[i]);
+		//int h = -samples[i] * sampleHeight;
+
+		//**scene_8 specific
+		for (int i = 0; i<NSPOTS; i++) {
+			mySpots[i].draw(w);
+		}
+
+	}
+
+}
+
 
 
 ////******************* XML LOAD/SAVE BULB LOCATION FUNCTIONS ********************/////

@@ -7,6 +7,7 @@
 #include "vertBars.h"
 #include "ellipse.h"
 #include "MidiShapes.h"
+#include "glowSpots.h"
 
 #include "ofxDmx.h" //include ofxDM addon
 #include "ofxGui.h" //include GUI addon
@@ -20,6 +21,8 @@
 #define NBARS 32
 #define NELLIPSES 60
 #define NSHAPES 25
+#define NSPOTS 10
+
 
 //define scene options
 typedef enum {
@@ -73,6 +76,7 @@ public:
 	Bar myBars[NBARS];
 	ellipse myEllipses[NELLIPSES];
 	MidiShapes myShapes[NSHAPES];
+	glowSpots mySpots[NSPOTS];
 
 	ofImage tmpImage; //image for screengrab to be saved to. The bulbs pick their colour from this
 	ofColor tmpCol; //stores the colour value to pass to bulbs
@@ -104,6 +108,8 @@ public:
 	ofParameterGroup scene_06; //controller group scene 6
 	ofParameterGroup scene_07; //controller group scene 7
 
+	ofParameterGroup scene_08; //controller group scene 8
+
 	ofParameterGroup scene_09; //controller group scene 9 - glimmer
 	ofParameterGroup scene_00; //controller group scene 0
 
@@ -118,11 +124,13 @@ public:
 	void drawSamples_scene1(vector<float> samples);
 	void drawSamples_scene5(vector<float> samples);
 	void drawSamples_scene6(vector<float> samples);
+	void drawSamples_scene8(vector<float> samples);
 
 	void audioIn(float * input, int bufferSize, int nChannels);
 	void drawFFT_scene1();
 	void drawFFT_scene5();
 	void drawFFT_scene6();
+	void drawFFT_scene8();
 
 	ofSoundStream soundStream;
 	vector<float> samplesChannelL;
@@ -218,6 +226,18 @@ public:
 	ofParameter<float> sc7_xSpread = 60;
 	ofParameter<float> sc7_ySpread = 30;
 
+	//---------------------------------------- scene 08
+	ofParameter<float> sc8_sampleScale = 300;
+	ofParameter<float> sc8_xLoc = 300;
+	ofParameter<float> sc8_yLoc = 85;
+	ofParameter<float> sc8_opac = 20;
+	ofParameter<int> sc8_move = 0;
+	ofParameter<int> sc8_startFreq = 0;
+	ofParameter<int> sc8_freqStep = 10;
+	ofParameter<float> sc8_smoothAmount = 0.98f;
+	int sc8_spacing = sc8_sampleScale;
+
+
 	//---------------------------------------- scene 09
 	ofParameter<int> sc9_allBrightness = 0;
 	ofParameter<float> sc9_fineFadeSpeed = 0.01;
@@ -238,6 +258,9 @@ public:
 	void mainScene_5(); //MIDI bars
 	void mainScene_6(); //place frequencies
 	void mainScene_7(); //elliptical orbiters
+
+	void mainScene_8(); //scott glowspots
+
 
 	void mainScene_9(); //glimmer
 	void mainScene_0(); //test scene Fade all
