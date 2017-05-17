@@ -186,7 +186,9 @@ public:
 
 	//GUI
 	ofParameter<float> sc4_fade = 10;
-	
+	ofParameter<float> sc4_plinkBright = 127;
+	ofParameter<float> sc4_bassBright = 255;
+	ofParameter<float> sc4_keyBright = 255;
 
 	ofParameter<float> sc4_plinkMin = 50; //minimum size for plink Shapes
 	ofParameter<float> sc4_plinkMax = 300; //maximum size for plink shapes

@@ -48,7 +48,9 @@ void MidiShapes::draw(float _fadeSpeed) {
 }
 
 void MidiShapes::drawPlink(float _fadeSpeed){
-	
+
+	ofSetColor(255, bright);
+
 	ofDrawRectangle(x, y, width, height);
 	
 	//fade out
