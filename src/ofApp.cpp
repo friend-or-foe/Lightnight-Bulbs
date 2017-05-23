@@ -169,6 +169,40 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 			}
 		}
 	}
+
+	if (myScene == SCENE_6) {
+		if (midiMessage.velocity != 0) {
+			int randBulb = int(ofRandom(30, NBULBS));
+			switch (midiMessage.pitch)
+			{
+			case 56:
+				myShapes[0].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+				break;
+			case 57:
+				myShapes[1].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+				break;
+			case 59:
+				myShapes[2].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+				break;
+			case 60:
+				myShapes[3].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+				break;
+			case 67:
+				myShapes[4].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+				break;
+			case 65:
+				myShapes[5].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+				break;
+			case 64:
+				myShapes[6].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+				break;
+			case 62:
+				myShapes[7].initRussPlink(plinkCount, myBulb[randBulb].x, myBulb[randBulb].y, sc6_russBright);
+				break;
+			}
+		}
+	}
+
 	//midiControl = midiMessage.control;
 
 	
@@ -268,7 +302,7 @@ void ofApp::draw() {
 
 	//***************UNCOMMENT TO SEND SIGNALS WHEN CONNECTED TO USBPRO*****************//
 	//update dmx values
-	//dmx.update();
+	dmx.update();
 
 	//draw framerate to window
 	ofDrawBitmapString(ofToString(ofGetFrameRate(), 1), 10, 20);
@@ -285,7 +319,7 @@ void ofApp::sendDMXVals(int _bulbNum) {
 
 	int thisLightValue = myBulb[_bulbNum].dmxLightVal;
 	int thisID = myBulb[_bulbNum].dmxID;
-	dmx.setLevel(thisID, thisLightValue, 2);
+	dmx.setLevel(thisID, thisLightValue, 2); //***************CHANGE ME********///
 
 	///uncomment to check outgoing DMX values
 	///printf("dmxVal: %i\n", thisLightValue);
@@ -907,6 +941,40 @@ void ofApp::keyPressed(int key) {
 		break;
 	}
 
+
+	if (myScene == SCENE_9) {
+		if (key == 'c') {
+			if (testBulb < NBULBS) {
+				testBulb++;
+				myBulb[testBulb].myTrigger = true;
+				myBulb[testBulb].dmxLightVal = 255;
+			
+		} else {
+			testBulb = 0;
+				myBulb[testBulb].myTrigger = true;
+			myBulb[testBulb].dmxLightVal = 255;
+		}
+		}
+
+		if (key == 'z') {
+			if (testBulb > 0) {
+				testBulb--;
+				myBulb[testBulb].myTrigger = true;
+			
+		}
+		else {
+			testBulb = NBULBS;
+				myBulb[testBulb].myTrigger = true;
+			myBulb[testBulb].dmxLightVal = 255;
+		}
+		myBulb[testBulb].dmxLightVal = 255;
+		}
+		if (key == 'x') {
+			myBulb[testBulb].myTrigger = true;
+			myBulb[testBulb].dmxLightVal = 255;
+		}
+
+	}
 	//----------------- TEST SCENE 4 SHAPES ------------------//
 	if (myScene == SCENE_4) {
 		if (key == 'q') {
@@ -987,7 +1055,9 @@ void ofApp::keyPressed(int key) {
 		}
 	}
 
-	//----------------- TEST SCENE 4 SHAPES ------------------//
+
+
+	//----------------- TEST SCENE 6 SHAPES ------------------//
 	if (myScene == SCENE_6) {
 		int randBulb = int(ofRandom(30, NBULBS));
 		switch (key)

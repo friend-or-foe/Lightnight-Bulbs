@@ -92,7 +92,7 @@ public:
 	int planOffsetX; //amount to offset drawing from left edge of stage
 	int planOffsetY; //amount to offset drawing from top edge of stage
 
-
+	int testBulb = 0;
 	///--------- GUI STUFF --------------//
 
 	void initGUI();
@@ -179,9 +179,9 @@ public:
 	int bassCount = 10; //keep traack of number of 'Bass' shapes on screen
 	int keyCount = 19; //keep traack of number of 'key' shapes on screen
 
-	ofParameter<float> sc4_leftEdge = 100; //left edge border
+	ofParameter<float> sc4_leftEdge = 300; //left edge border
 	ofParameter<float> sc4_rightEdge = 1100; //right edge border
-	ofParameter<float> sc4_topEdge = 100; //top edge border
+	ofParameter<float> sc4_topEdge = 200; //top edge border
 	ofParameter<float> sc4_botEdge = 400; //bottom edge border
 
 	//GUI
@@ -252,7 +252,7 @@ public:
 	
 
 	///--------- SCENE STUFF --------------//
-	Scene myScene = SCENE_1;
+	Scene myScene = SCENE_0;
 	void mainScene_1(); //expanding centre circle
 	void mainScene_2(); //spinning gradients
 	void mainScene_3(); //wipe objects
